@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HandManager : MonoBehaviour {
+public class Hand : MonoBehaviour {
 
     [SerializeField] List<Card> currentHandCards = new List<Card>();
 

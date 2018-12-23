@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DealerManager : MonoBehaviour {
+public class Dealer : MonoBehaviour {
 
        
     public enum gameStates {
@@ -16,9 +16,9 @@ public class DealerManager : MonoBehaviour {
 
     public gameStates currentGameState;
 
-    [SerializeField] HandManager[] playerHands;
-    [SerializeField] DeckManager deck;
-    [SerializeField] HandManager communityCards;
+    [SerializeField] Hand[] playerHands;
+    [SerializeField] Deck mainDeck;
+    [SerializeField] Hand communityCards;
 
     int numberOfPlayers;
 
@@ -35,7 +35,7 @@ public class DealerManager : MonoBehaviour {
             playerHands[p].ResetHand();
         }
         communityCards.ResetHand();
-        deck.ResetDeck();
+        mainDeck.ResetDeck();
         currentGameState = gameStates.Start;
     }
 
@@ -43,50 +43,45 @@ public class DealerManager : MonoBehaviour {
     {
         if (currentGameState == gameStates.Start)
         {
-            DealToEachPlayer();
+            DealToEachPlayer(2);
             currentGameState = gameStates.Dealt;
         }
         else if (currentGameState == gameStates.Dealt)
         {
-            DealFlop();
+            DealCards(3, mainDeck, communityCards);
             currentGameState = gameStates.Flop;
         }
         else if (currentGameState == gameStates.Flop)
         {
-            DealTurnOrRiver();
+            DealCards(1, mainDeck, communityCards);
             currentGameState = gameStates.Turn;
         }
         else if (currentGameState == gameStates.Turn)
         {
-            DealTurnOrRiver();
+            DealCards(1, mainDeck, communityCards);
             currentGameState = gameStates.River;
         }
     }
 
-
-    private void DealTurnOrRiver()
+    private void DealToEachPlayer(int numberOfCards)
     {
-        communityCards.AddCard(deck.GetTopCard());
-    }
-
-    private void DealFlop()
-    {
-        for (int i = 0; i < 3; i++)
-        {
-            communityCards.AddCard(deck.GetTopCard());
-        }
-    }
-
-    private void DealToEachPlayer()
-    {
-        for (int i = 0; i < 2; i++)
+        for (int i = 0; i < numberOfCards; i++)
         {
             for (int p = 0; p < numberOfPlayers; p++)
             {
-                playerHands[p].AddCard(deck.GetTopCard());
+                DealCards(1, mainDeck, playerHands[p]);
             }
         }
     }
+
+    private void DealCards(int numberOfCards, Deck fromDeck, Hand toHand)
+    {
+        for (int i = 0; i < numberOfCards; i++)
+        {
+            toHand.AddCard(fromDeck.GetTopCard());
+        }
+    }
+
 
     // Update is called once per frame
     void Update () {

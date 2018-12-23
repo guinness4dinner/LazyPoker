@@ -2,24 +2,26 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DeckManager : MonoBehaviour {
+public class Deck : MonoBehaviour {
 
     [SerializeField] List<Card> deckCards;
     [SerializeField] List<Card> currentDeckCards = new List<Card>();
 
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
         ResetDeck();
     }
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+
+    // Update is called once per frame
+    void Update()
+    {
+
+    }
 
     public void AddCard(Card card)
     {
-        
+
     }
 
     public void RemoveCard(Card card)
@@ -52,8 +54,8 @@ public class DeckManager : MonoBehaviour {
         }
 
         currentDeckCards = shuffledCards;
-    }  
-    
+    }
+
     public void ResetDeck()
     {
         currentDeckCards = new List<Card>();
