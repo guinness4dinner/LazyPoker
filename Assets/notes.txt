@@ -1,0 +1,61 @@
+1. Check if Flush
+2. Check if Straight. Both true stop.
+3. List number of each rank
+4. Check if 4 of one rank. True stop.
+5. Check if 3 of one rank, 2 of another.  True Stop.
+6. Check if 3 of one rank. True Stop.
+7. Check if 2 of one rank, 2 of another. True Stop.
+8. Check if 2 of one rank.
+
+Part B.
+1. If Flush && Straight, Straight Flush.  Get rank of Highest card that is part of the straight.  If Ace, check 2nd highest (5 replaces)
+2. If 4 of one rank, Four of a Kind.  Get rank of 4 of a kind, and rank of highest card not in the 4.
+3. If Full House. Get rank of 3, Get Rank of the 2.
+4. If just Flush, Get the ranks of all 5 cards.
+5. If just Straight, Get rank of highest card in straight. If Ace, check 2nd highest (5 replaces)
+6. If 3 of one rank, Three of a Kind.  Get rank of the 3, and the rank of the 2 highest odd cards.
+7. If two pair.  Get rank of each pair, and the highest odd card.
+8. If one pair.  Get Rank of pair, and the rank of the 3 highest odd cards.
+9. If none of these, get rank of 5 highest cards. 
+
+
+        bool[] foundCards = new bool[] { false, false, false, false, false };
+        for (int el = 0; el < pokerHand.Count; el++)
+        {
+            Card.Rank rank = pokerHand[el].GetRank();
+            if (rank == (Card.Rank)highestCard && !foundCards[4])
+            {
+                fiveCardHand.Insert(0,pokerHand[el]);
+                foundCards[4] = true;
+            }
+            if (rank == (Card.Rank)highestCard-1 && !foundCards[3])
+            {
+                fiveCardHand.Insert(1,pokerHand[el]);
+                foundCards[3] = true;
+            }
+            if (rank == (Card.Rank)highestCard - 2 && !foundCards[2])
+            {
+                fiveCardHand.Insert(2,pokerHand[el]);
+                foundCards[2] = true;
+            }
+            if (rank == (Card.Rank)highestCard - 3 && !foundCards[1])
+            {
+                fiveCardHand.Insert(3,pokerHand[el]);
+                foundCards[1] = true;
+            }
+            if (highestCard == 3)
+            {
+                if (rank == Card.Rank.A && !foundCards[0])
+                {
+                    fiveCardHand.Insert(4, pokerHand[el]);
+                    foundCards[0] = true;
+                }
+                
+            }
+            else if (rank == (Card.Rank)highestCard - 4 && !foundCards[0])
+            {
+                fiveCardHand.Insert(4,pokerHand[el]);
+                foundCards[0] = true; 
+            }
+        }
+        return pokerHand;

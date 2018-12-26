@@ -33,6 +33,7 @@ public class Dealer : MonoBehaviour {
         for (int p = 0; p < numberOfPlayers; p++)
         {
             playerHands[p].ResetHand();
+            playerHands[p].GetComponent<PokerHandChecker>().ResetChecker();
         }
         communityCards.ResetHand();
         mainDeck.ResetDeck();
@@ -60,6 +61,10 @@ public class Dealer : MonoBehaviour {
         {
             DealCards(1, mainDeck, communityCards);
             currentGameState = gameStates.River;
+            foreach (Hand el in playerHands)
+            {
+                el.GetComponent<PokerHandChecker>().CheckPokerHand();
+            }
         }
     }
 
@@ -82,9 +87,4 @@ public class Dealer : MonoBehaviour {
         }
     }
 
-
-    // Update is called once per frame
-    void Update () {
-		
-	}
 }
