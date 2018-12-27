@@ -7,28 +7,34 @@ public class ShowCards : NetworkBehaviour {
 
     [SerializeField] CardPrefabs cardPrefabs;
     [SerializeField] List<int> cardList = new List<int>();
-    public Transform[] networkCardPositions;
     [SerializeField] Transform[] localCardPositions;
 
     [SerializeField] Transform[] cardPositions;
 
-    int playerNumber = 0;
+    [SerializeField] FindLocalPlayer findLocalPlayer;
+
+    [SyncVar]
+    public int playerNum = -1;
 
     private void Start()
     {
         cardPrefabs = FindObjectOfType<CardPrefabs>();
+        findLocalPlayer = FindObjectOfType<FindLocalPlayer>();
     }
 
     [ClientRpc]
-    public void RpcSetPlayerNumber(int playerNumberToSet)
+    public void RpcSetLocalPlayer(int i)
     {
-        playerNumber = playerNumberToSet;
+        playerNum = i;
+
+        if (isLocalPlayer)
+        {
+            findLocalPlayer.localPlayerNum = playerNum;
+        }
     }
 
     [ClientRpc]
     public void RpcSetup () {
-
-       networkCardPositions = FindObjectOfType<CardPositions>().playerCardPositions[playerNumber];
 
         if (isLocalPlayer)
         {
@@ -36,14 +42,25 @@ public class ShowCards : NetworkBehaviour {
         }
         else
         {
-            cardPositions = networkCardPositions;
+            int localPlayerNum = findLocalPlayer.localPlayerNum;
+            int numberOfPlayers = findLocalPlayer.positionOrder.Length;
+            int posNum = 0;
+            if (playerNum < localPlayerNum )
+            {
+                posNum = numberOfPlayers - localPlayerNum + playerNum;
+            }
+            else
+            {
+                posNum = playerNum - localPlayerNum;
+            }
+            cardPositions = FindObjectOfType<CardPositions>().GetPlayerCardPositions(posNum);
         }
 	}
 
     [ClientRpc]
     public void RpcCommunitySetup()
     {
-            cardPositions = networkCardPositions;
+            cardPositions = localCardPositions;
     }
 
     [ClientRpc]

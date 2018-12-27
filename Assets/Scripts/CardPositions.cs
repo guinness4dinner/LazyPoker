@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class CardPositions : MonoBehaviour {
 
+    [SerializeField] Transform[] player0Positions;
     [SerializeField] Transform[] player1Positions;
     [SerializeField] Transform[] player2Positions;
     [SerializeField] Transform[] player3Positions;
@@ -14,11 +15,17 @@ public class CardPositions : MonoBehaviour {
     [SerializeField] Transform[] player8Positions;
     [SerializeField] Transform[] player9Positions;
 
-    public Transform[][] playerCardPositions;
+    Transform[][] playerCardPositions;
+
+    public Transform[] GetPlayerCardPositions(int pos)
+    {
+        return playerCardPositions[pos];
+    }
 
     private void Start()
     {
-        playerCardPositions = new Transform[][] { 
+        playerCardPositions = new Transform[][] {
+            player0Positions,
             player1Positions, 
             player2Positions, 
             player3Positions, 

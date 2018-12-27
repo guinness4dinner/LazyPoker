@@ -111,7 +111,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1709269043156354}
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -0, y: 0, z: 0.4}
+  m_LocalPosition: {x: 0.238, y: -0, z: 0.302}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4772509179085340}
@@ -124,7 +124,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1026241374622290}
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -0.2, y: 0, z: 0.4}
+  m_LocalPosition: {x: 0.038000003, y: 0, z: 0.302}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4772509179085340}
@@ -137,7 +137,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1125231199536656}
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -0.1, y: 0, z: 0.4}
+  m_LocalPosition: {x: 0.13800001, y: 0, z: 0.302}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4772509179085340}
@@ -168,7 +168,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1743347327349992}
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0.1, y: 0, z: 0.4}
+  m_LocalPosition: {x: 0.338, y: 0, z: 0.302}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4772509179085340}
@@ -181,7 +181,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1102595791929054}
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -0.3, y: 0, z: 0.4}
+  m_LocalPosition: {x: -0.062000006, y: 0, z: 0.302}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4772509179085340}
@@ -198,13 +198,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce4c0296960f3e943bf323692dd2259c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  networkCardPositions:
+  cardPrefabs: {fileID: 0}
+  cardList: 
+  localCardPositions:
   - {fileID: 4911513487512116}
   - {fileID: 4517901705944352}
   - {fileID: 4747572092168672}
   - {fileID: 4151594443030656}
   - {fileID: 4797275375478254}
-  localCardPositions: []
+  cardPositions: []
 --- !u!114 &114528917130141032
 MonoBehaviour:
   m_ObjectHideFlags: 1

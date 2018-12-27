@@ -56,6 +56,7 @@ MonoBehaviour:
   playerHands: []
   mainDeck: {fileID: 0}
   communityCards: {fileID: 0}
+  gameManager: {fileID: 0}
 --- !u!114 &114755325580033642
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -67,6 +68,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e712667baaaa62a40a95fcbb3649e47a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player0Positions:
+  - {fileID: 0}
+  - {fileID: 0}
   player1Positions:
   - {fileID: 4903439610035052, guid: 49345d71dfb551541abaec27f6da413b, type: 2}
   - {fileID: 4899542494719038, guid: 49345d71dfb551541abaec27f6da413b, type: 2}

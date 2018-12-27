@@ -6,7 +6,7 @@ using UnityEngine;
 public class Dealer : MonoBehaviour {
 
        
-    public enum gameStates {
+    public enum dealStates {
         Setup,
         Start,
         Dealt,
@@ -15,29 +15,36 @@ public class Dealer : MonoBehaviour {
         River,
     };
 
-    public gameStates currentGameState;
+    public dealStates currentGameState;
 
     [SerializeField] Hand[] playerHands;
     [SerializeField] Deck mainDeck;
     [SerializeField] Hand communityCards;
+    [SerializeField] PokerGameManager gameManager;
 
-    int numberOfPlayers;
+    Player[] players;
+
+    public int numberOfPlayers;
+
+    private void Start()
+    {
+        gameManager = FindObjectOfType<PokerGameManager>();
+    }
 
     public void SetupGame()
     {
-        var players = GameObject.FindGameObjectsWithTag("Player");
+        players = gameManager.players;
         playerHands = new Hand[players.Length];
         for (int i = 0; i < players.Length; i++)
         {
             playerHands[i] = players[i].GetComponent<Hand>();
-            players[i].GetComponent<ShowCards>().RpcSetPlayerNumber(i);
             players[i].GetComponent<ShowCards>().RpcSetup();            
         }
 
         communityCards.GetComponent<ShowCards>().RpcCommunitySetup();
 
         numberOfPlayers = playerHands.Length;
-        currentGameState = gameStates.Start;
+        currentGameState = dealStates.Start;
     }
 
     public void ResetRound()
@@ -49,30 +56,30 @@ public class Dealer : MonoBehaviour {
         }
         communityCards.ResetHand();
         mainDeck.ResetDeck();
-        currentGameState = gameStates.Start;
+        currentGameState = dealStates.Start;
     }
 
     public void Deal()
     {
-        if (currentGameState == gameStates.Start)
+        if (currentGameState == dealStates.Start)
         {
             DealToEachPlayer(2);
-            currentGameState = gameStates.Dealt;
+            currentGameState = dealStates.Dealt;
         }
-        else if (currentGameState == gameStates.Dealt)
+        else if (currentGameState == dealStates.Dealt)
         {
             DealCards(3, mainDeck, communityCards);
-            currentGameState = gameStates.Flop;
+            currentGameState = dealStates.Flop;
         }
-        else if (currentGameState == gameStates.Flop)
+        else if (currentGameState == dealStates.Flop)
         {
             DealCards(1, mainDeck, communityCards);
-            currentGameState = gameStates.Turn;
+            currentGameState = dealStates.Turn;
         }
-        else if (currentGameState == gameStates.Turn)
+        else if (currentGameState == dealStates.Turn)
         {
             DealCards(1, mainDeck, communityCards);
-            currentGameState = gameStates.River;
+            currentGameState = dealStates.River;
             foreach (Hand el in playerHands)
             {
                 el.GetComponent<PokerHandChecker>().CheckPokerHand();

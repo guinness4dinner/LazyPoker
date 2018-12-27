@@ -8,8 +8,8 @@ public class StartGame : MonoBehaviour {
 
     public void StartGameButton()
     {
-        gameButtons.SetActive(true);
-        FindObjectOfType<Dealer>().SetupGame();
+        //gameButtons.SetActive(true);
+        FindObjectOfType<PokerGameManager>().SetupGame();
         gameObject.SetActive(false);
     }
 }
