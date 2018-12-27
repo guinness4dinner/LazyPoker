@@ -22,6 +22,8 @@ GameObject:
   - component: {fileID: 33146259210496812}
   - component: {fileID: 23667821704205068}
   - component: {fileID: 114755313903126924}
+  - component: {fileID: 114760026203663176}
+  - component: {fileID: 114582276546996982}
   m_Layer: 0
   m_Name: Card 10Diamond
   m_TagString: Untagged
@@ -84,6 +86,27 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1788192572548436}
   m_Mesh: {fileID: 4300000, guid: 75a891c2b1c784f4da76061244438046, type: 3}
+--- !u!114 &114582276546996982
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1788192572548436}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1768714887, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_TransformSyncMode: 1
+  m_SendInterval: 0.1
+  m_SyncRotationAxis: 7
+  m_RotationSyncCompression: 0
+  m_SyncSpin: 0
+  m_MovementTheshold: 0.001
+  m_VelocityThreshold: 0.0001
+  m_SnapThreshold: 5
+  m_InterpolateRotation: 1
+  m_InterpolateMovement: 1
 --- !u!114 &114755313903126924
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -97,3 +120,36 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   suit: 2
   rank: 9
+  cardNumber: 33
+--- !u!114 &114760026203663176
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1788192572548436}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 40
+    i1: 66
+    i2: 206
+    i3: 190
+    i4: 227
+    i5: 154
+    i6: 145
+    i7: 180
+    i8: 185
+    i9: 183
+    i10: 162
+    i11: 17
+    i12: 19
+    i13: 180
+    i14: 82
+    i15: 122
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 0

@@ -22,6 +22,8 @@ GameObject:
   - component: {fileID: 33130288822172904}
   - component: {fileID: 23920732340636202}
   - component: {fileID: 114366580764321096}
+  - component: {fileID: 114530638234166616}
+  - component: {fileID: 114276605814135850}
   m_Layer: 0
   m_Name: Card KClub
   m_TagString: Untagged
@@ -84,6 +86,27 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1146819959405836}
   m_Mesh: {fileID: 4300000, guid: 73f139cb661472d46af4e88f82175051, type: 3}
+--- !u!114 &114276605814135850
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1146819959405836}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1768714887, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_TransformSyncMode: 1
+  m_SendInterval: 0.1
+  m_SyncRotationAxis: 7
+  m_RotationSyncCompression: 0
+  m_SyncSpin: 0
+  m_MovementTheshold: 0.001
+  m_VelocityThreshold: 0.0001
+  m_SnapThreshold: 5
+  m_InterpolateRotation: 1
+  m_InterpolateMovement: 1
 --- !u!114 &114366580764321096
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -97,3 +120,36 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   suit: 1
   rank: 12
+  cardNumber: 44
+--- !u!114 &114530638234166616
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1146819959405836}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 238
+    i1: 199
+    i2: 59
+    i3: 117
+    i4: 219
+    i5: 109
+    i6: 56
+    i7: 36
+    i8: 153
+    i9: 5
+    i10: 101
+    i11: 29
+    i12: 173
+    i13: 141
+    i14: 142
+    i15: 196
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 0

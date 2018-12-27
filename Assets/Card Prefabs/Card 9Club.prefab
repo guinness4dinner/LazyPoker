@@ -22,6 +22,8 @@ GameObject:
   - component: {fileID: 33291738357797686}
   - component: {fileID: 23587166623920888}
   - component: {fileID: 114450369747964688}
+  - component: {fileID: 114260616188965320}
+  - component: {fileID: 114269017514699692}
   m_Layer: 0
   m_Name: Card 9Club
   m_TagString: Untagged
@@ -84,6 +86,59 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1669408336425062}
   m_Mesh: {fileID: 4300000, guid: 562d9024df022824badf74c951979904, type: 3}
+--- !u!114 &114260616188965320
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1669408336425062}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 51
+    i1: 189
+    i2: 181
+    i3: 85
+    i4: 27
+    i5: 246
+    i6: 89
+    i7: 4
+    i8: 24
+    i9: 237
+    i10: 40
+    i11: 227
+    i12: 139
+    i13: 153
+    i14: 250
+    i15: 61
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 0
+--- !u!114 &114269017514699692
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1669408336425062}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1768714887, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_TransformSyncMode: 1
+  m_SendInterval: 0.1
+  m_SyncRotationAxis: 7
+  m_RotationSyncCompression: 0
+  m_SyncSpin: 0
+  m_MovementTheshold: 0.001
+  m_VelocityThreshold: 0.0001
+  m_SnapThreshold: 5
+  m_InterpolateRotation: 1
+  m_InterpolateMovement: 1
 --- !u!114 &114450369747964688
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -97,3 +152,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   suit: 1
   rank: 8
+  cardNumber: 28

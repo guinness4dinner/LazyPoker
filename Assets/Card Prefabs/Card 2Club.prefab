@@ -22,6 +22,8 @@ GameObject:
   - component: {fileID: 33546727114919114}
   - component: {fileID: 23765167783732320}
   - component: {fileID: 114205811362507166}
+  - component: {fileID: 114257604312002906}
+  - component: {fileID: 114960479472106456}
   m_Layer: 0
   m_Name: Card 2Club
   m_TagString: Untagged
@@ -97,3 +99,56 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   suit: 1
   rank: 1
+--- !u!114 &114257604312002906
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1376682729640136}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 73
+    i1: 68
+    i2: 96
+    i3: 92
+    i4: 176
+    i5: 212
+    i6: 130
+    i7: 212
+    i8: 58
+    i9: 29
+    i10: 63
+    i11: 229
+    i12: 116
+    i13: 141
+    i14: 220
+    i15: 41
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 0
+--- !u!114 &114960479472106456
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1376682729640136}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1768714887, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_TransformSyncMode: 1
+  m_SendInterval: 0.1
+  m_SyncRotationAxis: 7
+  m_RotationSyncCompression: 0
+  m_SyncSpin: 0
+  m_MovementTheshold: 0.001
+  m_VelocityThreshold: 0.0001
+  m_SnapThreshold: 5
+  m_InterpolateRotation: 1
+  m_InterpolateMovement: 1

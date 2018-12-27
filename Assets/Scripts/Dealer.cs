@@ -7,6 +7,7 @@ public class Dealer : MonoBehaviour {
 
        
     public enum gameStates {
+        Setup,
         Start,
         Dealt,
         Flop,
@@ -22,8 +23,19 @@ public class Dealer : MonoBehaviour {
 
     int numberOfPlayers;
 
-	// Use this for initialization
-	void Start () {
+    public void SetupGame()
+    {
+        var players = GameObject.FindGameObjectsWithTag("Player");
+        playerHands = new Hand[players.Length];
+        for (int i = 0; i < players.Length; i++)
+        {
+            playerHands[i] = players[i].GetComponent<Hand>();
+            players[i].GetComponent<ShowCards>().RpcSetPlayerNumber(i);
+            players[i].GetComponent<ShowCards>().RpcSetup();            
+        }
+
+        communityCards.GetComponent<ShowCards>().RpcCommunitySetup();
+
         numberOfPlayers = playerHands.Length;
         currentGameState = gameStates.Start;
     }

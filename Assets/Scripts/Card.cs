@@ -33,6 +33,7 @@ public class Card : MonoBehaviour {
 
     [SerializeField] Suit suit;
     [SerializeField] Rank rank;
+    [SerializeField] int cardNumber;
 
     public Card.Suit GetSuit()
     {
@@ -42,6 +43,11 @@ public class Card : MonoBehaviour {
     public Card.Rank GetRank()
     {
         return rank;
+    }
+
+    public int GetCardNumber()
+    {
+        return cardNumber;
     }
 
 }

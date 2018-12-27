@@ -22,6 +22,8 @@ GameObject:
   - component: {fileID: 33231640487226132}
   - component: {fileID: 23051560493518998}
   - component: {fileID: 114200187226353528}
+  - component: {fileID: 114632017361134510}
+  - component: {fileID: 114236821927956106}
   m_Layer: 0
   m_Name: Card JHeart
   m_TagString: Untagged
@@ -97,3 +99,57 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   suit: 3
   rank: 10
+  cardNumber: 42
+--- !u!114 &114236821927956106
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1911860926448070}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1768714887, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_TransformSyncMode: 1
+  m_SendInterval: 0.1
+  m_SyncRotationAxis: 7
+  m_RotationSyncCompression: 0
+  m_SyncSpin: 0
+  m_MovementTheshold: 0.001
+  m_VelocityThreshold: 0.0001
+  m_SnapThreshold: 5
+  m_InterpolateRotation: 1
+  m_InterpolateMovement: 1
+--- !u!114 &114632017361134510
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1911860926448070}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 230
+    i1: 14
+    i2: 138
+    i3: 4
+    i4: 38
+    i5: 225
+    i6: 68
+    i7: 100
+    i8: 40
+    i9: 225
+    i10: 16
+    i11: 152
+    i12: 76
+    i13: 19
+    i14: 137
+    i15: 146
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 0

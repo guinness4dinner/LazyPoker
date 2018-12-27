@@ -22,6 +22,8 @@ GameObject:
   - component: {fileID: 33490466934921172}
   - component: {fileID: 23683264944328376}
   - component: {fileID: 114974117251395212}
+  - component: {fileID: 114016390501751276}
+  - component: {fileID: 114467659772684112}
   m_Layer: 0
   m_Name: Card KHeart
   m_TagString: Untagged
@@ -84,6 +86,59 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1892989261176182}
   m_Mesh: {fileID: 4300000, guid: cafbd75bb165b3c4b8df30b4080d7f27, type: 3}
+--- !u!114 &114016390501751276
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1892989261176182}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 114
+    i1: 249
+    i2: 75
+    i3: 148
+    i4: 16
+    i5: 198
+    i6: 138
+    i7: 228
+    i8: 187
+    i9: 117
+    i10: 167
+    i11: 174
+    i12: 206
+    i13: 62
+    i14: 182
+    i15: 204
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 0
+--- !u!114 &114467659772684112
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1892989261176182}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1768714887, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_TransformSyncMode: 1
+  m_SendInterval: 0.1
+  m_SyncRotationAxis: 7
+  m_RotationSyncCompression: 0
+  m_SyncSpin: 0
+  m_MovementTheshold: 0.001
+  m_VelocityThreshold: 0.0001
+  m_SnapThreshold: 5
+  m_InterpolateRotation: 1
+  m_InterpolateMovement: 1
 --- !u!114 &114974117251395212
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -97,3 +152,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   suit: 3
   rank: 12
+  cardNumber: 46

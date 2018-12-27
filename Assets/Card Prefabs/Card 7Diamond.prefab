@@ -22,6 +22,8 @@ GameObject:
   - component: {fileID: 33832410766864380}
   - component: {fileID: 23768456965605116}
   - component: {fileID: 114398360396548318}
+  - component: {fileID: 114785994709246094}
+  - component: {fileID: 114869425112111154}
   m_Layer: 0
   m_Name: Card 7Diamond
   m_TagString: Untagged
@@ -97,3 +99,57 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   suit: 2
   rank: 6
+  cardNumber: 21
+--- !u!114 &114785994709246094
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1562798525004772}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 123
+    i1: 128
+    i2: 32
+    i3: 182
+    i4: 8
+    i5: 28
+    i6: 86
+    i7: 84
+    i8: 217
+    i9: 35
+    i10: 5
+    i11: 119
+    i12: 50
+    i13: 32
+    i14: 183
+    i15: 161
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 0
+--- !u!114 &114869425112111154
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1562798525004772}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1768714887, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_TransformSyncMode: 1
+  m_SendInterval: 0.1
+  m_SyncRotationAxis: 7
+  m_RotationSyncCompression: 0
+  m_SyncSpin: 0
+  m_MovementTheshold: 0.001
+  m_VelocityThreshold: 0.0001
+  m_SnapThreshold: 5
+  m_InterpolateRotation: 1
+  m_InterpolateMovement: 1

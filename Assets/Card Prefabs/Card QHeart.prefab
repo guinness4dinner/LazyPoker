@@ -97,3 +97,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   suit: 3
   rank: 11
+  cardNumber: 50

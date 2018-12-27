@@ -22,6 +22,8 @@ GameObject:
   - component: {fileID: 33359609316190000}
   - component: {fileID: 23890909809883632}
   - component: {fileID: 114882267806665132}
+  - component: {fileID: 114017410500527070}
+  - component: {fileID: 114908234692052826}
   m_Layer: 0
   m_Name: Card AClub
   m_TagString: Untagged
@@ -84,6 +86,38 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1669690480303448}
   m_Mesh: {fileID: 4300000, guid: f100bd56e4d38bb4191b5676772f708d, type: 3}
+--- !u!114 &114017410500527070
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1669690480303448}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 176
+    i1: 90
+    i2: 235
+    i3: 2
+    i4: 76
+    i5: 250
+    i6: 241
+    i7: 148
+    i8: 170
+    i9: 136
+    i10: 0
+    i11: 136
+    i12: 201
+    i13: 56
+    i14: 135
+    i15: 94
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 0
 --- !u!114 &114882267806665132
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -97,3 +131,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   suit: 1
   rank: 13
+  cardNumber: 36
+--- !u!114 &114908234692052826
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1669690480303448}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1768714887, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_TransformSyncMode: 1
+  m_SendInterval: 0.1
+  m_SyncRotationAxis: 7
+  m_RotationSyncCompression: 0
+  m_SyncSpin: 0
+  m_MovementTheshold: 0.001
+  m_VelocityThreshold: 0.0001
+  m_SnapThreshold: 5
+  m_InterpolateRotation: 1
+  m_InterpolateMovement: 1

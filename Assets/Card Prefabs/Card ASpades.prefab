@@ -22,6 +22,8 @@ GameObject:
   - component: {fileID: 33261160809231362}
   - component: {fileID: 23829319442386222}
   - component: {fileID: 114024619748701096}
+  - component: {fileID: 114395205444205600}
+  - component: {fileID: 114261293234698420}
   m_Layer: 0
   m_Name: Card ASpades
   m_TagString: Untagged
@@ -97,3 +99,57 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   suit: 4
   rank: 13
+  cardNumber: 39
+--- !u!114 &114261293234698420
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1514474641000744}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1768714887, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_TransformSyncMode: 1
+  m_SendInterval: 0.1
+  m_SyncRotationAxis: 7
+  m_RotationSyncCompression: 0
+  m_SyncSpin: 0
+  m_MovementTheshold: 0.001
+  m_VelocityThreshold: 0.0001
+  m_SnapThreshold: 5
+  m_InterpolateRotation: 1
+  m_InterpolateMovement: 1
+--- !u!114 &114395205444205600
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1514474641000744}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 234
+    i1: 1
+    i2: 165
+    i3: 242
+    i4: 10
+    i5: 242
+    i6: 171
+    i7: 4
+    i8: 26
+    i9: 29
+    i10: 111
+    i11: 3
+    i12: 222
+    i13: 225
+    i14: 199
+    i15: 204
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 0

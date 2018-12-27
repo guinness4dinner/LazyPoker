@@ -1,5 +1,4 @@
 ﻿using System;
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,8 +7,6 @@ using System.Linq;
 public class PokerHandChecker : MonoBehaviour {
 
     [SerializeField] Hand communityHand;
-    [SerializeField] int[] numberEachRank;
-    [SerializeField] int[] numberEachSuit;
 
     public enum HandType
     {   
@@ -28,6 +25,12 @@ public class PokerHandChecker : MonoBehaviour {
     public Card.Rank[] highestRanks = new Card.Rank[] { Card.Rank.none, Card.Rank.none, Card.Rank.none, Card.Rank.none, Card.Rank.none };
     List<Card> playerHand;
 
+    private void Start()
+    {
+        var communityHandObject = GameObject.FindGameObjectWithTag("Community");
+        communityHand = communityHandObject.GetComponent<Hand>();
+    }
+
     public void ResetChecker()
     {
         handType = HandType.HighCard;
@@ -40,10 +43,10 @@ public class PokerHandChecker : MonoBehaviour {
 
         pokerHand.AddRange(GetComponent<Hand>().GetCardList());
         pokerHand.AddRange(communityHand.GetCardList());
-        
 
-        numberEachRank = GetNumberEachRank(pokerHand);
-        numberEachSuit = GetNumberEachSuit(pokerHand);
+
+        int[] numberEachRank = GetNumberEachRank(pokerHand);
+        int[] numberEachSuit = GetNumberEachSuit(pokerHand);
 
         if (IsStraight(numberEachRank))
         {

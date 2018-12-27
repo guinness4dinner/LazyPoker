@@ -22,6 +22,8 @@ GameObject:
   - component: {fileID: 33735028020688844}
   - component: {fileID: 23986520967634428}
   - component: {fileID: 114409958351440900}
+  - component: {fileID: 114934336131358558}
+  - component: {fileID: 114507222203630654}
   m_Layer: 0
   m_Name: Card 5Club
   m_TagString: Untagged
@@ -97,3 +99,57 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   suit: 1
   rank: 4
+  cardNumber: 12
+--- !u!114 &114507222203630654
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1714340981689802}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1768714887, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_TransformSyncMode: 1
+  m_SendInterval: 0.1
+  m_SyncRotationAxis: 7
+  m_RotationSyncCompression: 0
+  m_SyncSpin: 0
+  m_MovementTheshold: 0.001
+  m_VelocityThreshold: 0.0001
+  m_SnapThreshold: 5
+  m_InterpolateRotation: 1
+  m_InterpolateMovement: 1
+--- !u!114 &114934336131358558
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1714340981689802}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 213
+    i1: 97
+    i2: 145
+    i3: 110
+    i4: 114
+    i5: 54
+    i6: 149
+    i7: 132
+    i8: 217
+    i9: 118
+    i10: 115
+    i11: 130
+    i12: 155
+    i13: 9
+    i14: 181
+    i15: 100
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 0

@@ -22,6 +22,8 @@ GameObject:
   - component: {fileID: 33096479194509240}
   - component: {fileID: 23680683831952990}
   - component: {fileID: 114973644162873552}
+  - component: {fileID: 114838928551378980}
+  - component: {fileID: 114170405659005536}
   m_Layer: 0
   m_Name: Card 7Heart
   m_TagString: Untagged
@@ -84,6 +86,59 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1944764112128302}
   m_Mesh: {fileID: 4300000, guid: be387c29fcf9ecf438ff4a57c9cc4a4f, type: 3}
+--- !u!114 &114170405659005536
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1944764112128302}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1768714887, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_TransformSyncMode: 1
+  m_SendInterval: 0.1
+  m_SyncRotationAxis: 7
+  m_RotationSyncCompression: 0
+  m_SyncSpin: 0
+  m_MovementTheshold: 0.001
+  m_VelocityThreshold: 0.0001
+  m_SnapThreshold: 5
+  m_InterpolateRotation: 1
+  m_InterpolateMovement: 1
+--- !u!114 &114838928551378980
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1944764112128302}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 25
+    i1: 197
+    i2: 245
+    i3: 97
+    i4: 81
+    i5: 115
+    i6: 87
+    i7: 228
+    i8: 57
+    i9: 162
+    i10: 63
+    i11: 25
+    i12: 115
+    i13: 57
+    i14: 176
+    i15: 14
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 0
 --- !u!114 &114973644162873552
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -97,3 +152,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   suit: 3
   rank: 6
+  cardNumber: 22

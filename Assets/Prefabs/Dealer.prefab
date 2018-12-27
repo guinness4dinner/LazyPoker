@@ -1,0 +1,96 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1927591666882500}
+  m_IsPrefabAsset: 1
+--- !u!1 &1927591666882500
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4449760794850526}
+  - component: {fileID: 114255559836993408}
+  - component: {fileID: 114755325580033642}
+  m_Layer: 0
+  m_Name: Dealer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4449760794850526
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1927591666882500}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 403.5, y: 159, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114255559836993408
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1927591666882500}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 385ad2af4b165cf4fbff0f107eaa700f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentGameState: 0
+  playerHands: []
+  mainDeck: {fileID: 0}
+  communityCards: {fileID: 0}
+--- !u!114 &114755325580033642
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1927591666882500}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e712667baaaa62a40a95fcbb3649e47a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player1Positions:
+  - {fileID: 4903439610035052, guid: 49345d71dfb551541abaec27f6da413b, type: 2}
+  - {fileID: 4899542494719038, guid: 49345d71dfb551541abaec27f6da413b, type: 2}
+  player2Positions:
+  - {fileID: 4157155732732078, guid: b2480980e21c0d84caff319071726e6f, type: 2}
+  - {fileID: 4973774726415208, guid: b2480980e21c0d84caff319071726e6f, type: 2}
+  player3Positions:
+  - {fileID: 4445886643528698, guid: 30f107c14934ebd498a48609f79dd5f4, type: 2}
+  - {fileID: 4929722419553448, guid: 30f107c14934ebd498a48609f79dd5f4, type: 2}
+  player4Positions:
+  - {fileID: 4129650135793162, guid: d1e58f806ac367f4c88a83b2c2f3bb5a, type: 2}
+  - {fileID: 4366396446135678, guid: d1e58f806ac367f4c88a83b2c2f3bb5a, type: 2}
+  player5Positions:
+  - {fileID: 4794249935633188, guid: 7c6e4d5cf91ae404cb6ab235c870e30c, type: 2}
+  - {fileID: 4813301018364032, guid: 7c6e4d5cf91ae404cb6ab235c870e30c, type: 2}
+  player6Positions:
+  - {fileID: 4050247231849582, guid: 769b0eab2f2051c4fbca5d1ba9c535d3, type: 2}
+  - {fileID: 4742726294016760, guid: 769b0eab2f2051c4fbca5d1ba9c535d3, type: 2}
+  player7Positions:
+  - {fileID: 4773569276505852, guid: 644356e492154464abc89a6e35e5902e, type: 2}
+  - {fileID: 4136352459790920, guid: 644356e492154464abc89a6e35e5902e, type: 2}
+  player8Positions:
+  - {fileID: 4158769386124802, guid: fb820bbee69a84c4db32570a676608ae, type: 2}
+  - {fileID: 4034604175045784, guid: fb820bbee69a84c4db32570a676608ae, type: 2}
+  player9Positions:
+  - {fileID: 4385230549766966, guid: 4f105d1d414ab654383bb8dc98746398, type: 2}
+  - {fileID: 4915954752917912, guid: 4f105d1d414ab654383bb8dc98746398, type: 2}

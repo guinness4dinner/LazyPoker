@@ -22,6 +22,8 @@ GameObject:
   - component: {fileID: 33440287665848738}
   - component: {fileID: 23476800476091128}
   - component: {fileID: 114407245715015838}
+  - component: {fileID: 114337506140649888}
+  - component: {fileID: 114966165838666580}
   m_Layer: 0
   m_Name: Card JClub
   m_TagString: Untagged
@@ -84,6 +86,38 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1429357141655238}
   m_Mesh: {fileID: 4300000, guid: b767677409213e24098e98e2490c551e, type: 3}
+--- !u!114 &114337506140649888
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1429357141655238}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 120
+    i1: 206
+    i2: 188
+    i3: 81
+    i4: 86
+    i5: 210
+    i6: 29
+    i7: 228
+    i8: 185
+    i9: 12
+    i10: 226
+    i11: 143
+    i12: 170
+    i13: 245
+    i14: 232
+    i15: 150
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 0
 --- !u!114 &114407245715015838
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -97,3 +131,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   suit: 1
   rank: 10
+  cardNumber: 40
+--- !u!114 &114966165838666580
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1429357141655238}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1768714887, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_TransformSyncMode: 1
+  m_SendInterval: 0.1
+  m_SyncRotationAxis: 7
+  m_RotationSyncCompression: 0
+  m_SyncSpin: 0
+  m_MovementTheshold: 0.001
+  m_VelocityThreshold: 0.0001
+  m_SnapThreshold: 5
+  m_InterpolateRotation: 1
+  m_InterpolateMovement: 1
