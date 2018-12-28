@@ -15,7 +15,9 @@ public class Player : NetworkBehaviour {
 
     public playerState currentPlayerState = playerState.Uncalled;
 
-    public string action { get; private set; }
+
+    [SyncVar] [SerializeField] public string action; //{ get; private set; }
+
     public GameObject CheckCallButton;
     public GameObject BetMinButton;
     public GameObject BetOtherButton;

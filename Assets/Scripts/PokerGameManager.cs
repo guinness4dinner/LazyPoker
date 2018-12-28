@@ -249,7 +249,7 @@ public class PokerGameManager : MonoBehaviour {
             player.RpcSetButtonText(1, "Bet " + minBet.ToString());
             //player.BetOtherButton.GetComponent<Text>().text = "Bet Other";
         }
-        Debug.Log("Waiting for Action from :" + player.playerControllerId.ToString());
+        Debug.Log("Waiting for Action from :" + player.netId.ToString());
         yield return StartCoroutine(WaitForAction(player));
 
         switch (player.action)

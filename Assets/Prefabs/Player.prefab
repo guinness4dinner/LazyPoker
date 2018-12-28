@@ -317,7 +317,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 114972320819840084}
-        m_MethodName: BetMinButtonClick
+        m_MethodName: CmdBetMinButtonClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -566,7 +566,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 114972320819840084}
-        m_MethodName: CheckCallButtonClick
+        m_MethodName: CmdCheckCallButtonClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -670,7 +670,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 114972320819840084}
-        m_MethodName: FoldButtonClick
+        m_MethodName: CmdFoldButtonClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -722,7 +722,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 114972320819840084}
-        m_MethodName: BetOtherButtonClick
+        m_MethodName: CmdBetOtherButtonClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -750,6 +750,8 @@ MonoBehaviour:
   BetMinButton: {fileID: 1752650764308072}
   BetOtherButton: {fileID: 1812086523617612}
   FoldButton: {fileID: 1919855474006548}
+  pocketValue: 0
+  raisedValue: 0
 --- !u!114 &114993112184690162
 MonoBehaviour:
   m_ObjectHideFlags: 1
