@@ -230,27 +230,27 @@ public class PokerGameManager : MonoBehaviour {
 
     private IEnumerator AskForCheckCallOrRaise(int curBet, int minBet, Player player)
     {
-        player.CheckCallButton.SetActive(true);
-        player.BetMinButton.SetActive(true);
+        player.RpcActivateGUIButtons();
         //player.BetOtherButton.SetActive(true);
         int raisedValue = player.GetRaisedValue();
         int callValue = curBet - raisedValue;
 
         if (callValue > 0 )
         {           
-            player.CheckCallButton.GetComponent<Text>().text = "Call " + callValue.ToString();
-            player.BetMinButton.GetComponent<Text>().text = "Raise " + minBet.ToString();
+
+            player.RpcSetButtonText(0, "Call " + callValue.ToString());
+            player.RpcSetButtonText(1, "Raise " + minBet.ToString());
             //player.BetOtherButton.GetComponent<Text>().text = "Raise Other";
-            player.FoldButton.SetActive(true);
+            player.RpcActivateFoldButton();
         }
         else
         {
-            player.CheckCallButton.GetComponent<Text>().text = "Check";
-            player.BetMinButton.GetComponent<Text>().text = "Bet " + minBet.ToString();
+            player.RpcSetButtonText(0, "Check");
+            player.RpcSetButtonText(1, "Bet " + minBet.ToString());
             //player.BetOtherButton.GetComponent<Text>().text = "Bet Other";
         }
         Debug.Log("Waiting for Action from :" + player.playerControllerId.ToString());
-        yield return StartCoroutine(player.WaitForAction());
+        yield return StartCoroutine(WaitForAction(player));
 
         switch (player.action)
         {
@@ -282,10 +282,13 @@ public class PokerGameManager : MonoBehaviour {
                 break;
         }
 
-        player.CheckCallButton.SetActive(false);
-        player.BetMinButton.SetActive(false);
-        //player.BetOtherButton.SetActive(false);
-        player.FoldButton.SetActive(false);
+        player.RpcDeactivateGUIButtons();
+    }
+
+    public IEnumerator WaitForAction(Player player)
+    {
+        player.RpcSetActionNull(); // clear last action, we want a new one
+        while (player.action == null) { yield return null; }
     }
 
     private void MakeAllCalledPlayersUncalled()

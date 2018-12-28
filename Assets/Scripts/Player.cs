@@ -24,6 +24,13 @@ public class Player : NetworkBehaviour {
     [SerializeField] int pocketValue = 0;
     [SerializeField] int raisedValue = 0;
 
+    GameObject[] buttons;
+
+    private void Start()
+    {
+        buttons = new GameObject[4] { CheckCallButton, BetMinButton, BetOtherButton, FoldButton };
+    }
+
     public int GetPocketValue()
     {
         return pocketValue;
@@ -44,28 +51,70 @@ public class Player : NetworkBehaviour {
         return raisedValue;
     }
 
-    public IEnumerator WaitForAction()
+    [ClientRpc]
+    public void RpcActivateGUIButtons()
     {
-        action = null; // clear last action, we want a new one
-        while (action == null) { yield return null; }
+        if (isLocalPlayer)
+        {
+            CheckCallButton.SetActive(true);
+            BetMinButton.SetActive(true);
+            BetOtherButton.SetActive(true);
+        }
     }
 
-    public void CheckCallButtonClick() 
+    [ClientRpc]
+    public void RpcActivateFoldButton()
+    {
+        if (isLocalPlayer)
+        {
+            FoldButton.SetActive(true);
+        }
+    }
+
+    [ClientRpc]
+    public void RpcSetButtonText(int buttonNum, string text)
+    {
+        if (isLocalPlayer)
+        {
+            buttons[buttonNum].GetComponent<Text>().text = text;
+        }
+    }
+
+    [ClientRpc]
+    public void RpcDeactivateGUIButtons()
+    {
+            CheckCallButton.SetActive(false);
+            BetMinButton.SetActive(false);
+            BetOtherButton.SetActive(false);
+            FoldButton.SetActive(false);
+    }
+
+    [ClientRpc]
+    public void RpcSetActionNull()
+    {
+        action = null;
+    }
+
+    [Command]
+    public void CmdCheckCallButtonClick() 
     { 
         action = "CheckOrCall"; 
     }
 
-    public void BetMinButtonClick()
+    [Command]
+    public void CmdBetMinButtonClick()
     {
         action = "Bet Min";
     }
 
-    public void BetOtherButtonClick()
+    [Command]
+    public void CmdBetOtherButtonClick()
     {
 
     }
 
-    public void FoldButtonClick()
+    [Command]
+    public void CmdFoldButtonClick()
     {
         action = "Fold";
     }
