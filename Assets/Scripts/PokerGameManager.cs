@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PokerGameManager : MonoBehaviour {
 
@@ -31,9 +32,11 @@ public class PokerGameManager : MonoBehaviour {
     public Player[] players;
 
     int numberOfPlayers;
-    int currentPlayersTurn = 1;
-    int currentDealerPlayer = 0;
-    int currentBet;
+    [SerializeField] int currentPlayersTurn = 1;
+    [SerializeField] int currentDealerPlayer = 0;
+    [SerializeField] int currentBet;
+    [SerializeField] bool roundActive = false;
+    [SerializeField] bool bettingRoundActive = false;
 
     [SerializeField] int potValue = 0;
 
@@ -67,9 +70,11 @@ public class PokerGameManager : MonoBehaviour {
 
         //Place Dealer, SB, BB buttons
 
-        //Choose first deaker and Player.
+        //Choose first dealer and Player.
+
         currentGameState = gameStates.Start;
-        RunGame();
+        roundActive = true;
+        StartCoroutine(RunRound());
     }
 
     public void SetupPlayerOrder()
@@ -98,43 +103,236 @@ public class PokerGameManager : MonoBehaviour {
         players = newPlayerOrder;
     }
 
-    private void RunGame()
+    private IEnumerator RunRound()
     {
-       while(true)
-       {
-            switch (currentGameState)
-            {
-                case gameStates.Start:
-                    currentGameState = gameStates.Preflop;
-                    break;
-                case gameStates.Preflop:
-                    currentGameState = gameStates.Flop;
-                    break;
-                case gameStates.Flop:
-                    currentGameState = gameStates.Turn;
-                    break;
-                case gameStates.Turn:
-                    currentGameState = gameStates.River;
-                    break;
-                case gameStates.River:
-                    currentGameState = gameStates.Showdown;
-                    break;
-                case gameStates.Showdown:
-                    currentGameState = gameStates.Start;
-                    break;
-                default:
-                    break;
-            }
+        while(roundActive)
+        {
+            NextGameState();
             dealer.Deal();
-            BettingRound();
+            MakeAllUnfoldedPlayersUncalled();
+            yield return StartCoroutine(BettingRound());
         }
-       
     }
 
-    private void BettingRound()
+    private void MakeAllUnfoldedPlayersUncalled()
     {
-        throw new NotImplementedException();
+        for (int i = 0; i < numberOfPlayers; i++)
+        {
+            if (players[i].currentPlayerState != Player.playerState.Folded)
+            {
+                players[i].currentPlayerState = Player.playerState.Uncalled;
+            }
+            players[i].SetRaisedValue(0);
+        }
     }
 
-	
+    private void NextGameState()
+    {
+        switch (currentGameState)
+        {
+            case gameStates.Start:
+                currentGameState = gameStates.Preflop;
+                break;
+            case gameStates.Preflop:
+                currentGameState = gameStates.Flop;
+                break;
+            case gameStates.Flop:
+                currentGameState = gameStates.Turn;
+                break;
+            case gameStates.Turn:
+                currentGameState = gameStates.River;
+                break;
+            case gameStates.River:
+                currentGameState = gameStates.Showdown;
+                break;
+            case gameStates.Showdown:
+                currentGameState = gameStates.Start;
+                NewRound();
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void NewRound()
+    {
+        //Set Dealer & Current Player
+        dealer.ResetRound();
+    }
+
+    private IEnumerator BettingRound()
+    {
+        bettingRoundActive = true;
+        switch (currentGameState)
+        {
+            case gameStates.Preflop:
+                PlaceBet(smallBlindValue, players[currentPlayersTurn]);
+                NextPlayersTurn();
+                PlaceBet(bigBlindValue, players[currentPlayersTurn]);
+                players[currentPlayersTurn].currentPlayerState = Player.playerState.Called;
+                currentBet = bigBlindValue;                
+                break;
+            case gameStates.Flop:
+                currentPlayersTurn = currentDealerPlayer;
+                NextPlayersTurn();
+                yield return StartCoroutine(AskForCheckCallOrRaise(currentBet, minBet, players[currentPlayersTurn]));               
+                break;
+            case gameStates.Turn:
+                currentPlayersTurn = currentDealerPlayer;
+                NextPlayersTurn();
+                yield return StartCoroutine(AskForCheckCallOrRaise(currentBet, minBet, players[currentPlayersTurn]));
+                break;
+            case gameStates.River:
+                currentPlayersTurn = currentDealerPlayer;
+                NextPlayersTurn();
+                yield return StartCoroutine(AskForCheckCallOrRaise(currentBet, minBet, players[currentPlayersTurn]));
+                break;
+            case gameStates.Showdown:
+                currentPlayersTurn = currentDealerPlayer;
+                NextPlayersTurn();
+                yield return StartCoroutine(AskForCheckCallOrRaise(currentBet, minBet, players[currentPlayersTurn]));
+                break;
+            default:
+                break;
+        }
+
+        while (areAnyPlayersNotCalledOrFolded())
+        {
+            NextPlayersTurn();
+            yield return StartCoroutine(AskForCheckCallOrRaise(currentBet, minBet, players[currentPlayersTurn]));
+        }
+
+        if (IsOnlyOneCalledPlayerLeft())
+        {
+            //End Round
+        }
+        currentBet = 0;
+        bettingRoundActive = false;
+    }
+
+    private bool IsOnlyOneCalledPlayerLeft()
+    {
+        return false;
+    }
+
+    private bool areAnyPlayersNotCalledOrFolded()
+    {
+        for (int i = 0; i < numberOfPlayers; i++)
+        {
+            if (players[i].currentPlayerState == Player.playerState.Uncalled)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private IEnumerator AskForCheckCallOrRaise(int curBet, int minBet, Player player)
+    {
+        player.CheckCallButton.SetActive(true);
+        player.BetMinButton.SetActive(true);
+        //player.BetOtherButton.SetActive(true);
+        int raisedValue = player.GetRaisedValue();
+        int callValue = curBet - raisedValue;
+
+        if (callValue > 0 )
+        {           
+            player.CheckCallButton.GetComponent<Text>().text = "Call " + callValue.ToString();
+            player.BetMinButton.GetComponent<Text>().text = "Raise " + minBet.ToString();
+            //player.BetOtherButton.GetComponent<Text>().text = "Raise Other";
+            player.FoldButton.SetActive(true);
+        }
+        else
+        {
+            player.CheckCallButton.GetComponent<Text>().text = "Check";
+            player.BetMinButton.GetComponent<Text>().text = "Bet " + minBet.ToString();
+            //player.BetOtherButton.GetComponent<Text>().text = "Bet Other";
+        }
+        Debug.Log("Waiting for Action from :" + player.playerControllerId.ToString());
+        yield return StartCoroutine(player.WaitForAction());
+
+        switch (player.action)
+        {
+            case "CheckOrCall":
+                if (currentBet > 0)
+                {
+                    
+                    //Show Called X Text
+                    PlaceBet(callValue, player);
+                    player.currentPlayerState = Player.playerState.Called;
+                }
+                else
+                {
+                    //Show Checked Text
+                    player.currentPlayerState = Player.playerState.Called;
+                }
+                    break;
+            case "Bet Min":
+                //Show Raise X Text
+                PlaceBet(callValue + minBet, player);
+                currentBet += minBet;
+                MakeAllCalledPlayersUncalled();
+                player.currentPlayerState = Player.playerState.Called;
+                break;
+            case "Fold":
+                player.currentPlayerState = Player.playerState.Folded;
+                //Show Folded Text
+                //Hide Their Cards
+                break;
+        }
+
+        player.CheckCallButton.SetActive(false);
+        player.BetMinButton.SetActive(false);
+        //player.BetOtherButton.SetActive(false);
+        player.FoldButton.SetActive(false);
+    }
+
+    private void MakeAllCalledPlayersUncalled()
+    {
+        for (int i = 0; i < numberOfPlayers; i++)
+        {
+            if (players[i].currentPlayerState == Player.playerState.Called)
+            {
+                players[i].currentPlayerState = Player.playerState.Uncalled;
+            }
+        }
+    }
+
+    private void PlaceBet(int value, Player player)
+    {
+        int pocketValue = player.GetPocketValue();
+        int raisedValue = player.GetRaisedValue();
+        if (pocketValue >= value)
+        {
+            player.SetPocketValue(pocketValue - value);
+            player.SetRaisedValue(raisedValue + value );
+            potValue += value;
+        }
+        else
+        {
+            player.SetPocketValue(0);
+            player.SetRaisedValue(raisedValue + pocketValue);
+            potValue += pocketValue;
+        }
+        //Update Pot Value Text
+    }
+
+    private void NextPlayersTurn()
+    {
+        currentPlayersTurn++;
+        if (currentPlayersTurn > numberOfPlayers - 1)
+        {
+            currentPlayersTurn = 0;
+        }
+        while (players[currentPlayersTurn].currentPlayerState == Player.playerState.Folded)
+        {
+            currentPlayersTurn++;
+            if (currentPlayersTurn > numberOfPlayers - 1)
+            {
+                currentPlayersTurn = 0;
+            }
+        }
+        //Update Current Player Turn Text
+    }
 }

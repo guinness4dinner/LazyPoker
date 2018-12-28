@@ -5,18 +5,6 @@ using UnityEngine;
 
 public class Dealer : MonoBehaviour {
 
-       
-    public enum dealStates {
-        Setup,
-        Start,
-        Dealt,
-        Flop,
-        Turn,
-        River,
-    };
-
-    public dealStates currentGameState;
-
     [SerializeField] Hand[] playerHands;
     [SerializeField] Deck mainDeck;
     [SerializeField] Hand communityCards;
@@ -44,7 +32,6 @@ public class Dealer : MonoBehaviour {
         communityCards.GetComponent<ShowCards>().RpcCommunitySetup();
 
         numberOfPlayers = playerHands.Length;
-        currentGameState = dealStates.Start;
     }
 
     public void ResetRound()
@@ -56,34 +43,30 @@ public class Dealer : MonoBehaviour {
         }
         communityCards.ResetHand();
         mainDeck.ResetDeck();
-        currentGameState = dealStates.Start;
     }
 
     public void Deal()
     {
-        if (currentGameState == dealStates.Start)
+        switch (gameManager.currentGameState)
         {
-            DealToEachPlayer(2);
-            currentGameState = dealStates.Dealt;
-        }
-        else if (currentGameState == dealStates.Dealt)
-        {
-            DealCards(3, mainDeck, communityCards);
-            currentGameState = dealStates.Flop;
-        }
-        else if (currentGameState == dealStates.Flop)
-        {
-            DealCards(1, mainDeck, communityCards);
-            currentGameState = dealStates.Turn;
-        }
-        else if (currentGameState == dealStates.Turn)
-        {
-            DealCards(1, mainDeck, communityCards);
-            currentGameState = dealStates.River;
-            foreach (Hand el in playerHands)
-            {
-                el.GetComponent<PokerHandChecker>().CheckPokerHand();
-            }
+            case PokerGameManager.gameStates.Preflop:
+                DealToEachPlayer(2);
+                break;
+            case PokerGameManager.gameStates.Flop:
+                DealCards(3, mainDeck, communityCards);
+                break;
+            case PokerGameManager.gameStates.Turn:
+                DealCards(1, mainDeck, communityCards);
+                break;
+            case PokerGameManager.gameStates.River:
+                DealCards(1, mainDeck, communityCards);
+                foreach (Hand el in playerHands)
+                {
+                    el.GetComponent<PokerHandChecker>().CheckPokerHand();
+                }
+                break;
+            default:
+                break;
         }
     }
 

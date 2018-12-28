@@ -395,6 +395,11 @@ MonoBehaviour:
   allPositionOrder: 00000000050000000200000008000000040000000100000007000000090000000300000006000000
   positionOrder: 
   players: []
+  currentPlayersTurn: 1
+  currentDealerPlayer: 0
+  currentBet: 0
+  gameActive: 0
+  bettingRoundActive: 0
   potValue: 0
 --- !u!4 &260581061
 Transform:
@@ -1192,6 +1197,64 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &919823485
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4416086351410180, guid: e7255a9a40e66a74bbc14c9a1d09e70c, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4416086351410180, guid: e7255a9a40e66a74bbc14c9a1d09e70c, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4416086351410180, guid: e7255a9a40e66a74bbc14c9a1d09e70c, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4416086351410180, guid: e7255a9a40e66a74bbc14c9a1d09e70c, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4416086351410180, guid: e7255a9a40e66a74bbc14c9a1d09e70c, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4416086351410180, guid: e7255a9a40e66a74bbc14c9a1d09e70c, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4416086351410180, guid: e7255a9a40e66a74bbc14c9a1d09e70c, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4416086351410180, guid: e7255a9a40e66a74bbc14c9a1d09e70c, type: 2}
+      propertyPath: m_RootOrder
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 114484513948985488, guid: e7255a9a40e66a74bbc14c9a1d09e70c,
+        type: 2}
+      propertyPath: findLocalPlayer
+      value: 
+      objectReference: {fileID: 1772122898}
+    - target: {fileID: 114484513948985488, guid: e7255a9a40e66a74bbc14c9a1d09e70c,
+        type: 2}
+      propertyPath: cardPrefabs
+      value: 
+      objectReference: {fileID: 1064158097}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: e7255a9a40e66a74bbc14c9a1d09e70c, type: 2}
+  m_IsPrefabAsset: 0
+--- !u!114 &1064158097 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114555843713838620, guid: 5a6158ff376e4014d98399cb3f4810e6,
+    type: 2}
+  m_PrefabInternal: {fileID: 2047046704}
+  m_Script: {fileID: 11500000, guid: f18301d50c8c8e949b801c2d8e140e39, type: 3}
 --- !u!1001 &1160980544
 Prefab:
   m_ObjectHideFlags: 0
