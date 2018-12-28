@@ -254,7 +254,7 @@ public class PokerGameManager : MonoBehaviour {
 
         switch (player.action)
         {
-            case "CheckOrCall":
+            case 0://"CheckOrCall":
                 if (currentBet > 0)
                 {
                     
@@ -268,14 +268,14 @@ public class PokerGameManager : MonoBehaviour {
                     player.currentPlayerState = Player.playerState.Called;
                 }
                     break;
-            case "Bet Min":
+            case 1://"Bet Min":
                 //Show Raise X Text
                 PlaceBet(callValue + minBet, player);
                 currentBet += minBet;
                 MakeAllCalledPlayersUncalled();
                 player.currentPlayerState = Player.playerState.Called;
                 break;
-            case "Fold":
+            case 2://"Fold":
                 player.currentPlayerState = Player.playerState.Folded;
                 //Show Folded Text
                 //Hide Their Cards
@@ -288,7 +288,8 @@ public class PokerGameManager : MonoBehaviour {
     public IEnumerator WaitForAction(Player player)
     {
         player.RpcSetActionNull(); // clear last action, we want a new one
-        while (player.action == null) { yield return null; }
+        while (player.action == -1)//(player.action == null) 
+        { yield return null; }
     }
 
     private void MakeAllCalledPlayersUncalled()
