@@ -16,7 +16,7 @@ public class Player : NetworkBehaviour {
     public playerState currentPlayerState = playerState.Uncalled;
 
 
-    [SyncVar] [SerializeField] public int action; //{ get; private set; }
+    [SyncVar] [SerializeField] public string action; //{ get; private set; }
 
     public GameObject CheckCallButton;
     public GameObject BetMinButton;
@@ -94,34 +94,78 @@ public class Player : NetworkBehaviour {
     [ClientRpc]
     public void RpcSetActionNull()
     {
-        //action = null;
-        action = -1;
+        action = null;
+    }
+
+    public void CheckCallButtonClick()
+    {
+        if (isServer)
+        {
+            action = "CheckOrCall";
+        }
+        else
+        {
+            CmdCheckCallButtonClick();
+        }
     }
 
     [Command]
     void CmdCheckCallButtonClick() 
-    { 
-        //action = "CheckOrCall";
-        action = 0;
+    {
+        CheckCallButtonClick();
+    }
+
+    public void BetMinButtonClick()
+    {
+        if (isServer)
+        {
+            action = "Bet Min";
+        }
+        else
+        {
+            CmdBetMinButtonClick();
+        }
     }
 
     [Command]
     void CmdBetMinButtonClick()
     {
-        //action = "Bet Min";
-        action = 1;
+        BetMinButtonClick();
+    }
+
+    public void BetOtherButtonClick()
+    {
+        if (isServer)
+        {
+            //action = "Bet Other";
+        }
+        else
+        {
+            CmdBetOtherButtonClick();
+        }
     }
 
     [Command]
     void CmdBetOtherButtonClick()
     {
+        BetOtherButtonClick();
+    }
 
+    public void FoldButtonClick()
+    {
+        if (isServer)
+        {
+            action = "Fold";
+        }
+        else
+        {
+            CmdFoldButtonClick();
+        }
     }
 
     [Command]
     void CmdFoldButtonClick()
     {
-        //action = "Fold";
-        action = 3;
+        FoldButtonClick();
     }
 }
