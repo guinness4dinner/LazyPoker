@@ -25,11 +25,16 @@ public class Player : NetworkBehaviour {
 
     [SerializeField] int pocketValue = 0;
     [SerializeField] int raisedValue = 0;
+    [SerializeField] GameObject buttonCanvas;
 
     GameObject[] buttons;
 
     private void Start()
     {
+        if (isLocalPlayer)
+        {
+            buttonCanvas.SetActive(true);
+        }
         buttons = new GameObject[4] { CheckCallButton, BetMinButton, BetOtherButton, FoldButton };
     }
 
@@ -41,6 +46,7 @@ public class Player : NetworkBehaviour {
     public void SetPocketValue(int value)
     {
         pocketValue = value;
+        GetComponent<ShowCards>().pocketValueText.GetComponent<TextMesh>().text = "Pocket: " + pocketValue.ToString();
     }
 
     public void SetRaisedValue(int value)
@@ -85,10 +91,30 @@ public class Player : NetworkBehaviour {
     [ClientRpc]
     public void RpcDeactivateGUIButtons()
     {
+        if (isLocalPlayer)
+        {
+            DeactivateGUIButtons();
+        }
+    }
+
+    public void DeactivateGUIButtons()
+    {
+        if (CheckCallButton.activeSelf)
+        {
             CheckCallButton.SetActive(false);
+        }
+        if (BetMinButton.activeSelf)
+        {
             BetMinButton.SetActive(false);
+        }
+        if (BetOtherButton.activeSelf)
+        {
             BetOtherButton.SetActive(false);
+        }
+        if (FoldButton.activeSelf)
+        {
             FoldButton.SetActive(false);
+        }
     }
 
     [ClientRpc]
@@ -106,6 +132,7 @@ public class Player : NetworkBehaviour {
         else
         {
             CmdCheckCallButtonClick();
+            DeactivateGUIButtons();
         }
     }
 
@@ -124,6 +151,7 @@ public class Player : NetworkBehaviour {
         else
         {
             CmdBetMinButtonClick();
+            DeactivateGUIButtons();
         }
     }
 
@@ -142,6 +170,7 @@ public class Player : NetworkBehaviour {
         else
         {
             CmdBetOtherButtonClick();
+            DeactivateGUIButtons();
         }
     }
 
@@ -149,6 +178,7 @@ public class Player : NetworkBehaviour {
     void CmdBetOtherButtonClick()
     {
         BetOtherButtonClick();
+
     }
 
     public void FoldButtonClick()
@@ -160,6 +190,7 @@ public class Player : NetworkBehaviour {
         else
         {
             CmdFoldButtonClick();
+            DeactivateGUIButtons();
         }
     }
 

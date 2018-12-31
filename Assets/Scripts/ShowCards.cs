@@ -10,6 +10,15 @@ public class ShowCards : NetworkBehaviour {
     [SerializeField] Transform[] localCardPositions;
 
     [SerializeField] Transform[] cardPositions;
+    [SerializeField] Transform[] textPositions;
+
+    [SerializeField] public GameObject potValueText;
+
+    [SerializeField] public GameObject playerNameText;
+    [SerializeField] public GameObject pocketValueText;
+    [SerializeField] public GameObject statusText;
+    [SerializeField] public GameObject winnerText;
+    [SerializeField] public GameObject handTypeText;
 
     [SerializeField] FindLocalPlayer findLocalPlayer;
 
@@ -39,6 +48,12 @@ public class ShowCards : NetworkBehaviour {
         if (isLocalPlayer)
         {
             cardPositions = localCardPositions;
+
+            playerNameText.GetComponent<TextMesh>().text = "You";
+            playerNameText.SetActive(true);
+
+            pocketValueText.GetComponent<TextMesh>().text = "Pocket: " + GetComponent<Player>().GetPocketValue().ToString();
+            pocketValueText.SetActive(true);
         }
         else
         {
@@ -54,13 +69,28 @@ public class ShowCards : NetworkBehaviour {
                 posNum = playerNum - localPlayerNum;
             }
             cardPositions = FindObjectOfType<CardPositions>().GetPlayerCardPositions(posNum);
+            textPositions = FindObjectOfType<CardPositions>().GetPlayerTextPositions(posNum);
+
+            playerNameText.transform.position = textPositions[0].position;
+            pocketValueText.transform.position = textPositions[1].position;
+            statusText.transform.position = textPositions[2].position;
+            winnerText.transform.position = textPositions[3].position;
+            handTypeText.transform.position = textPositions[4].position;
+
+            playerNameText.GetComponent<TextMesh>().text = "Player " + playerNum.ToString();
+            playerNameText.SetActive(true);
+
+            pocketValueText.GetComponent<TextMesh>().text = "Pocket: " + GetComponent<Player>().GetPocketValue().ToString();
+            pocketValueText.SetActive(true);
         }
+
 	}
 
     [ClientRpc]
     public void RpcCommunitySetup()
     {
-            cardPositions = localCardPositions;
+        cardPositions = localCardPositions;
+        potValueText.SetActive(true);
     }
 
     [ClientRpc]
@@ -100,5 +130,16 @@ public class ShowCards : NetworkBehaviour {
             }
         }
 
+    }
+
+
+    //Specific to LazyPoker
+    [ClientRpc]
+    public void RpcRevealHand()
+    {
+        foreach (Card el in GetComponentsInChildren<Card>())
+        {
+            el.GetComponent<Transform>().Rotate(0, 0, 0);
+        }
     }
 }

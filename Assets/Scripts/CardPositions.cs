@@ -15,12 +15,30 @@ public class CardPositions : MonoBehaviour {
     [SerializeField] Transform[] player8Positions;
     [SerializeField] Transform[] player9Positions;
 
+    [SerializeField] Transform[] player0TextPos;
+    [SerializeField] Transform[] player1TextPos;
+    [SerializeField] Transform[] player2TextPos;
+    [SerializeField] Transform[] player3TextPos;
+    [SerializeField] Transform[] player4TextPos;
+    [SerializeField] Transform[] player5TextPos;
+    [SerializeField] Transform[] player6TextPos;
+    [SerializeField] Transform[] player7TextPos;
+    [SerializeField] Transform[] player8TextPos;
+    [SerializeField] Transform[] player9TextPos;
+
     Transform[][] playerCardPositions;
+    Transform[][] playerTextPositions;
 
     public Transform[] GetPlayerCardPositions(int pos)
     {
         return playerCardPositions[pos];
     }
+
+    public Transform[] GetPlayerTextPositions(int pos)
+    {
+        return playerTextPositions[pos];
+    }
+
 
     private void Start()
     {
@@ -36,6 +54,20 @@ public class CardPositions : MonoBehaviour {
             player8Positions,
             player9Positions
             };
+
+        playerTextPositions = new Transform[][] {
+            player0TextPos,
+            player1TextPos,
+            player2TextPos,
+            player3TextPos,
+            player4TextPos,
+            player5TextPos,
+            player6TextPos,
+            player7TextPos,
+            player8TextPos,
+            player9TextPos
+            };
+
     }
 
 }

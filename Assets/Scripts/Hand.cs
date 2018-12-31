@@ -14,12 +14,6 @@ public class Hand : MonoBehaviour {
         showCards = GetComponent<ShowCards>();
     }
 
-    //Specific to LazyPoker
-    public void RevealHand()
-    {
-
-    }
-
     public void FoldHand()
     {
         ResetHand();
