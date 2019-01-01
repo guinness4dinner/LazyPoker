@@ -5,13 +5,16 @@ using UnityEngine.Networking;
 
 public class FindLocalPlayer : NetworkBehaviour {
 
-    public int[] positionOrder;
     
     public int localPlayerNum = -1;
 
+    public int numberOfPlayers = 0;
+
     [ClientRpc]
-    public void RpcSetPosOrder(int[] posOrder)
+    public void RpcSetNumberOfPlayers(int numPlayers)
     {
-        positionOrder = posOrder;
+        numberOfPlayers = numPlayers;
     }
+     
+
 }

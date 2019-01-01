@@ -27,13 +27,11 @@ public class PokerGameManager : MonoBehaviour {
     [SerializeField] Dealer dealer;
     [SerializeField] FindLocalPlayer findLocalPlayer;
     [SerializeField] ShowCards communityCards;
-    [SerializeField] int[] allPositionOrder = new int[] { 0, 5, 2, 8, 4, 1, 7, 9, 3, 6 };
-    public int[] positionOrder;
 
     public Player[] players;
 
     int numberOfPlayers;
-    [SerializeField] int currentPlayersTurn = 1;
+    [SerializeField] int currentPlayersTurn;
     [SerializeField] int currentDealerPlayer = 0;
     [SerializeField] int currentBet;
     [SerializeField] int curMinBet;
@@ -58,7 +56,8 @@ public class PokerGameManager : MonoBehaviour {
         players = FindObjectsOfType<Player>();
         numberOfPlayers = players.Length;
 
-        SetupPlayerOrder();
+        //SetupPlayerOrder();
+        
 
         for (int i = 0; i < numberOfPlayers; i++)
         {
@@ -72,43 +71,20 @@ public class PokerGameManager : MonoBehaviour {
             players[i].GetComponent<ShowCards>().RpcSetLocalPlayer(i);
             players[i].GetComponent<ShowCards>().RpcChangeText(1, "Pocket: " + players[i].GetPocketValue());
         }
-        findLocalPlayer.RpcSetPosOrder(positionOrder);
+        FindObjectOfType<FindLocalPlayer>().RpcSetNumberOfPlayers(numberOfPlayers);
 
         dealer.SetupGame();
+        
+        //Choose first dealer (Randomly?)
 
-        //Place Dealer, SB, BB buttons
-
-        //Choose first dealer and Player.
-
+        //Place Dealer, and Turn buttons
+        players[currentDealerPlayer].GetComponent<ShowCards>().RpcActivateDealerButton();
+        currentPlayersTurn = currentDealerPlayer;
+        NextPlayersTurn();
+        
         currentGameState = gameStates.Start;
         roundActive = true;
         StartCoroutine(RunRound());
-    }
-
-    public void SetupPlayerOrder()
-    {
-        Player[] newPlayerOrder = new Player[numberOfPlayers];
-        positionOrder = new int[numberOfPlayers];
-        int posIdx = 0;
-
-        for (int k = 0; k < allPositionOrder.Length; k++)
-        {
-            for (int i = 0; i < numberOfPlayers; i++)
-            {
-                if (allPositionOrder[k] == i)
-                {
-                    positionOrder[posIdx] = i;
-                    posIdx++;
-                }
-            }
-        }
-
-        for (int i = 0; i < numberOfPlayers; i++)
-        {
-            newPlayerOrder[i] = players[positionOrder[i]];
-        }
-
-        players = newPlayerOrder;
     }
 
     private IEnumerator RunRound()
@@ -317,6 +293,7 @@ public class PokerGameManager : MonoBehaviour {
             if (players[i].currentPlayerState != Player.playerState.Folded)
             {
                 players[i].currentPlayerState = Player.playerState.Uncalled;
+                players[i].GetComponent<ShowCards>().RpcChangeText(2, "");
             }
             players[i].SetRaisedValue(0);
         }
@@ -557,6 +534,7 @@ public class PokerGameManager : MonoBehaviour {
 
     private void NextPlayersTurn()
     {
+        players[currentPlayersTurn].GetComponent<ShowCards>().RpcDeactivateTurnButton();
         currentPlayersTurn++;
         if (currentPlayersTurn > numberOfPlayers - 1)
         {
@@ -570,16 +548,19 @@ public class PokerGameManager : MonoBehaviour {
                 currentPlayersTurn = 0;
             }
         }
+        players[currentPlayersTurn].GetComponent<ShowCards>().RpcActivateTurnButton();
         //Update Current Player Turn Text
     }
 
     private void NextDealer()
     {
+        players[currentDealerPlayer].GetComponent<ShowCards>().RpcDeactivateDealerButton();
         currentDealerPlayer++;
         if (currentDealerPlayer > numberOfPlayers - 1)
         {
             currentDealerPlayer = 0;
         }
+        players[currentDealerPlayer].GetComponent<ShowCards>().RpcActivateDealerButton();
         //Update Current Player Turn Text
     }
 }

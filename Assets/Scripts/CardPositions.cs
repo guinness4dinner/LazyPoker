@@ -26,17 +26,42 @@ public class CardPositions : MonoBehaviour {
     [SerializeField] Transform[] player8TextPos;
     [SerializeField] Transform[] player9TextPos;
 
+    [SerializeField] Transform[] player0DealerBut;
+    [SerializeField] Transform[] player1DealerBut;
+    [SerializeField] Transform[] player2DealerBut;
+    [SerializeField] Transform[] player3DealerBut;
+    [SerializeField] Transform[] player4DealerBut;
+    [SerializeField] Transform[] player5DealerBut;
+    [SerializeField] Transform[] player6DealerBut;
+    [SerializeField] Transform[] player7DealerBut;
+    [SerializeField] Transform[] player8DealerBut;
+    [SerializeField] Transform[] player9DealerBut;
+
+    public List<int[]> playerPosList = new List<int[]>();
+    public int[] playerPos;
+
     Transform[][] playerCardPositions;
     Transform[][] playerTextPositions;
+    Transform[][] playerButPositions;
 
     public Transform[] GetPlayerCardPositions(int pos)
     {
-        return playerCardPositions[pos];
+        return playerCardPositions[playerPos[pos]];
     }
 
     public Transform[] GetPlayerTextPositions(int pos)
     {
-        return playerTextPositions[pos];
+        return playerTextPositions[playerPos[pos]];
+    }
+
+    public Transform[] GetPlayerButtonPositions(int pos)
+    {
+        return playerButPositions[playerPos[pos]];
+    }
+
+    public void SetPlayerPositions(int numberOfPlayers)
+    {
+        playerPos = playerPosList[numberOfPlayers-2];
     }
 
 
@@ -68,6 +93,37 @@ public class CardPositions : MonoBehaviour {
             player9TextPos
             };
 
+        playerButPositions = new Transform[][] {
+            player0DealerBut,
+            player1DealerBut,
+            player2DealerBut,
+            player3DealerBut,
+            player4DealerBut,
+            player5DealerBut,
+            player6DealerBut,
+            player7DealerBut,
+            player8DealerBut,
+            player9DealerBut
+            };
+
+        int[] tempPlayerPos = new int[] { 0, 1 };
+        playerPosList.Add(tempPlayerPos);
+        tempPlayerPos = new int[] { 0, 2, 1 };
+        playerPosList.Add(tempPlayerPos);
+        tempPlayerPos = new int[] { 0, 2, 1, 3 };
+        playerPosList.Add(tempPlayerPos);
+        tempPlayerPos = new int[] { 0, 2, 4, 1, 3 };
+        playerPosList.Add(tempPlayerPos);
+        tempPlayerPos = new int[] { 0, 5, 2, 4, 1, 3 };
+        playerPosList.Add(tempPlayerPos);
+        tempPlayerPos = new int[] { 0, 5, 2, 4, 1, 3, 6 };
+        playerPosList.Add(tempPlayerPos);
+        tempPlayerPos = new int[] { 0, 5, 2, 4, 1, 7, 3, 6 };
+        playerPosList.Add(tempPlayerPos);
+        tempPlayerPos = new int[] { 0, 5, 2, 8, 4, 1, 7, 3, 6 };
+        playerPosList.Add(tempPlayerPos);
+        tempPlayerPos = new int[] { 0, 5, 2, 8, 4, 1, 7, 9, 3, 6 };
+        playerPosList.Add(tempPlayerPos);
     }
 
 }

@@ -158,3 +158,32 @@ MonoBehaviour:
   - {fileID: 4858252025903176, guid: 4f105d1d414ab654383bb8dc98746398, type: 2}
   - {fileID: 4769283786221104, guid: 4f105d1d414ab654383bb8dc98746398, type: 2}
   - {fileID: 4543534117571740, guid: 4f105d1d414ab654383bb8dc98746398, type: 2}
+  player0DealerBut: []
+  player1DealerBut:
+  - {fileID: 4283694328830218, guid: 49345d71dfb551541abaec27f6da413b, type: 2}
+  - {fileID: 4557186849139386, guid: 49345d71dfb551541abaec27f6da413b, type: 2}
+  player2DealerBut:
+  - {fileID: 4693254259224024, guid: b2480980e21c0d84caff319071726e6f, type: 2}
+  - {fileID: 4444810022887638, guid: b2480980e21c0d84caff319071726e6f, type: 2}
+  player3DealerBut:
+  - {fileID: 4264961995294426, guid: 30f107c14934ebd498a48609f79dd5f4, type: 2}
+  - {fileID: 4762074755188718, guid: 30f107c14934ebd498a48609f79dd5f4, type: 2}
+  player4DealerBut:
+  - {fileID: 4683854172696798, guid: d1e58f806ac367f4c88a83b2c2f3bb5a, type: 2}
+  - {fileID: 4033532208663410, guid: d1e58f806ac367f4c88a83b2c2f3bb5a, type: 2}
+  player5DealerBut:
+  - {fileID: 4353345044418322, guid: 7c6e4d5cf91ae404cb6ab235c870e30c, type: 2}
+  - {fileID: 4815432136123260, guid: 7c6e4d5cf91ae404cb6ab235c870e30c, type: 2}
+  player6DealerBut:
+  - {fileID: 4294713188896040, guid: 769b0eab2f2051c4fbca5d1ba9c535d3, type: 2}
+  - {fileID: 4720007090857296, guid: 769b0eab2f2051c4fbca5d1ba9c535d3, type: 2}
+  player7DealerBut:
+  - {fileID: 4464158540546008, guid: 644356e492154464abc89a6e35e5902e, type: 2}
+  - {fileID: 4090470029851060, guid: 644356e492154464abc89a6e35e5902e, type: 2}
+  player8DealerBut:
+  - {fileID: 4112811568244256, guid: fb820bbee69a84c4db32570a676608ae, type: 2}
+  - {fileID: 4985357556554170, guid: fb820bbee69a84c4db32570a676608ae, type: 2}
+  player9DealerBut:
+  - {fileID: 4593106363763486, guid: 4f105d1d414ab654383bb8dc98746398, type: 2}
+  - {fileID: 4152895259720966, guid: 4f105d1d414ab654383bb8dc98746398, type: 2}
+  playerPos: 

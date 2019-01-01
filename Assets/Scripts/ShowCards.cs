@@ -11,6 +11,8 @@ public class ShowCards : NetworkBehaviour {
 
     [SerializeField] Transform[] cardPositions;
     [SerializeField] Transform[] textPositions;
+    [SerializeField] Transform[] buttonPostions;
+
 
     [SerializeField] public TextMesh potValueText;
 
@@ -19,6 +21,9 @@ public class ShowCards : NetworkBehaviour {
     [SerializeField] public TextMesh statusText;
     [SerializeField] public TextMesh winnerText;
     [SerializeField] public TextMesh handTypeText;
+
+    [SerializeField] public GameObject dealerButton;
+    [SerializeField] public GameObject currentTurnButton;
 
     [SerializeField] FindLocalPlayer findLocalPlayer;
 
@@ -60,8 +65,11 @@ public class ShowCards : NetworkBehaviour {
         else
         {
             int localPlayerNum = findLocalPlayer.localPlayerNum;
-            int numberOfPlayers = findLocalPlayer.positionOrder.Length;
+            int numberOfPlayers = findLocalPlayer.numberOfPlayers;
             int posNum = 0;
+
+            FindObjectOfType<CardPositions>().SetPlayerPositions(numberOfPlayers);
+
             if (playerNum < localPlayerNum )
             {
                 posNum = numberOfPlayers - localPlayerNum + playerNum;
@@ -72,12 +80,17 @@ public class ShowCards : NetworkBehaviour {
             }
             cardPositions = FindObjectOfType<CardPositions>().GetPlayerCardPositions(posNum);
             textPositions = FindObjectOfType<CardPositions>().GetPlayerTextPositions(posNum);
+            buttonPostions = FindObjectOfType<CardPositions>().GetPlayerButtonPositions(posNum);
 
             playerNameText.transform.position = textPositions[0].position;
             pocketValueText.transform.position = textPositions[1].position;
             statusText.transform.position = textPositions[2].position;
             winnerText.transform.position = textPositions[3].position;
             handTypeText.transform.position = textPositions[4].position;
+
+            dealerButton.transform.position = buttonPostions[0].position;
+            currentTurnButton.transform.position = buttonPostions[1].position;
+            currentTurnButton.transform.rotation = buttonPostions[1].rotation;
 
             var playerNumText = playerNum + 1;
             playerNameText.text = "Player " + playerNumText.ToString();
@@ -103,6 +116,30 @@ public class ShowCards : NetworkBehaviour {
     public void RpcMakeTextInactive(int infoTextNum)
     {
         infoTexts[infoTextNum].gameObject.SetActive(false);
+    }
+
+    [ClientRpc]
+    public void RpcActivateDealerButton()
+    {
+        dealerButton.SetActive(true);
+    }
+
+    [ClientRpc]
+    public void RpcDeactivateDealerButton()
+    {
+        dealerButton.SetActive(false);
+    }
+
+    [ClientRpc]
+    public void RpcActivateTurnButton()
+    {
+        currentTurnButton.SetActive(true);
+    }
+
+    [ClientRpc]
+    public void RpcDeactivateTurnButton()
+    {
+        currentTurnButton.SetActive(false);
     }
 
     [ClientRpc]

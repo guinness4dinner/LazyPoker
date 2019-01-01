@@ -1,4 +1,20 @@
-- Move Pot Value Text to under neath community cards
+
 -Implement Bet Other Menu
+
 -Side Pot logic
--Check the player order again, they are not being placed correctly.
+
+Then:
+-Player Elimination, Disconnection
+	Elimination
+	-Set them as always folded.
+	-Make sure dealer button skips them.
+	-The rest of the logic should be fine.
+	Disconnection
+	-Set them as eliminated instead of deleting the player object.
+	-If they reconnect, can they take thier seat back?
+-Server-side Game Setup Options
+-Player naming
+-Server-side in-game options:
+	-Set Pocket value of any player.
+	-Set elimination status on or off.
+	-Set Blinds, and Min Bet settings.
