@@ -26,7 +26,7 @@ public class PokerGameManager : MonoBehaviour {
     [SerializeField] int startingPocket = 200;
     [SerializeField] Dealer dealer;
     [SerializeField] FindLocalPlayer findLocalPlayer;
-    [SerializeField] TextMesh potValueText;
+    [SerializeField] ShowCards communityCards;
     [SerializeField] int[] allPositionOrder = new int[] { 0, 5, 2, 8, 4, 1, 7, 9, 3, 6 };
     public int[] positionOrder;
 
@@ -62,6 +62,7 @@ public class PokerGameManager : MonoBehaviour {
 
         for (int i = 0; i < numberOfPlayers; i++)
         {
+            players[i].GetComponent<PokerHandChecker>().RpcSetup();
             players[i].SetPocketValue(startingPocket);
             players[i].GetComponent<ShowCards>().playerNum = i;
         }
@@ -69,6 +70,7 @@ public class PokerGameManager : MonoBehaviour {
         {
             players[i].SetPocketValue(startingPocket);
             players[i].GetComponent<ShowCards>().RpcSetLocalPlayer(i);
+            players[i].GetComponent<ShowCards>().RpcChangeText(1, "Pocket: " + players[i].GetPocketValue());
         }
         findLocalPlayer.RpcSetPosOrder(positionOrder);
 
@@ -141,9 +143,7 @@ public class PokerGameManager : MonoBehaviour {
         {
             winner = loneCaller;
             //Update Text to show winner text.
-            winner.GetComponent<ShowCards>().winnerText.SetActive(true);
-            winner.GetComponent<ShowCards>().handTypeText.GetComponent<TextMesh>().text = "with " + winner.GetComponent<PokerHandChecker>().handType.ToString();
-            winner.GetComponent<ShowCards>().handTypeText.SetActive(true);
+            winner.GetComponent<ShowCards>().RpcMakeTextActive(3);
             GivePotToPlayer(winner);
         }
         else
@@ -152,9 +152,9 @@ public class PokerGameManager : MonoBehaviour {
             //Update Text to show Hand Type and winner text.
             foreach (Player el in winners)
             {
-                el.GetComponent<ShowCards>().winnerText.SetActive(true);
-                el.GetComponent<ShowCards>().handTypeText.GetComponent<TextMesh>().text = "with " + el.GetComponent<PokerHandChecker>().handType.ToString();
-                el.GetComponent<ShowCards>().handTypeText.SetActive(true);
+                el.GetComponent<ShowCards>().RpcMakeTextActive(3);
+                el.GetComponent<ShowCards>().RpcChangeText(4, "with " + el.GetComponent<PokerHandChecker>().handType.ToString());
+                el.GetComponent<ShowCards>().RpcMakeTextActive(4);
             }
             if (winners.Count > 1)
             {
@@ -175,10 +175,11 @@ public class PokerGameManager : MonoBehaviour {
         {
             var playerPocket = el.GetPocketValue();
             el.SetPocketValue(playerPocket + splitPotValue);
+            el.GetComponent<ShowCards>().RpcChangeText(1, "Pocket: " + el.GetPocketValue());
         }
 
         potValue = 0;
-        potValueText.text = "Pot: " + potValue.ToString();
+        communityCards.RpcChangePotValueText( "Pot: " + potValue.ToString());
         
     }
 
@@ -264,18 +265,18 @@ public class PokerGameManager : MonoBehaviour {
             }
         }
 
-        if (highesHandtypePlayers.Count == 1 && highesHandtypePlayers[0] == lastBetPlayer)
-        {
-            highesHandtypePlayers[0].GetComponent<ShowCards>().RpcRevealHand();
+        //if (highesHandtypePlayers.Count == 1 && highesHandtypePlayers[0] == lastBetPlayer)
+        //{
+            //highesHandtypePlayers[0].GetComponent<ShowCards>().RpcRevealHand();
             //Ask each remainingPlayer if they would like to reveal
-        }
-        else
-        {
+        //}
+        //else
+        //{
             foreach (Player el in remainingPlayers)
             {
                 el.GetComponent<ShowCards>().RpcRevealHand();
             }
-        }
+        //}
 
         return highesHandtypePlayers;
     }
@@ -305,7 +306,8 @@ public class PokerGameManager : MonoBehaviour {
         winner.SetPocketValue(playerPocket + potValue);
         potValue = 0;
         //Update Pot Value text.
-        potValueText.text = "Pot: " + potValue.ToString();
+        communityCards.RpcChangePotValueText("Pot: " + potValue.ToString());
+        winner.GetComponent<ShowCards>().RpcChangeText(1, "Pocket: " + winner.GetPocketValue());
     }
 
     private void MakeAllUnfoldedPlayersUncalled()
@@ -327,13 +329,17 @@ public class PokerGameManager : MonoBehaviour {
         //Reset text about Hand Types or Winner.
         foreach (Player el in players)
         {
-            el.GetComponent<ShowCards>().winnerText.SetActive(false);
-            el.GetComponent<ShowCards>().handTypeText.SetActive(false);
-            el.GetComponent<ShowCards>().statusText.GetComponent<TextMesh>().text = "";
+            el.currentPlayerState = Player.playerState.Uncalled;
+            el.GetComponent<ShowCards>().RpcMakeTextInactive(3);
+            el.GetComponent<ShowCards>().RpcMakeTextInactive(4);
+            el.GetComponent<ShowCards>().RpcChangeText(2, "");
         }
         loneCaller = null;
         lastBetPlayer = null;
         //Set Next Dealer & Current Player
+        NextDealer();
+        currentPlayersTurn = currentDealerPlayer;
+        NextPlayersTurn();
         currentBet = 0;
         curMinBet = minBet;
         dealer.ResetRound();
@@ -377,10 +383,10 @@ public class PokerGameManager : MonoBehaviour {
         {
             case gameStates.Preflop:
                 PlaceBet(smallBlindValue, players[currentPlayersTurn]);
-                players[currentPlayersTurn].GetComponent<ShowCards>().statusText.GetComponent<TextMesh>().text = "Small Blind";
+                players[currentPlayersTurn].GetComponent<ShowCards>().RpcChangeText(2,"Small Blind");
                 NextPlayersTurn();
                 PlaceBet(bigBlindValue, players[currentPlayersTurn]);
-                players[currentPlayersTurn].GetComponent<ShowCards>().statusText.GetComponent<TextMesh>().text = "Big Blind";
+                players[currentPlayersTurn].GetComponent<ShowCards>().RpcChangeText(2, "Big Blind");
                 currentBet = bigBlindValue;
                 break;
             case gameStates.Flop:
@@ -475,23 +481,23 @@ public class PokerGameManager : MonoBehaviour {
         switch (player.action)
         {
             case "CheckOrCall":
-                if (currentBet > 0)
+                if (callValue > 0)
                 {
                     //Show Called X Text
-                    players[currentPlayersTurn].GetComponent<ShowCards>().statusText.GetComponent<TextMesh>().text = "Called" + callValue.ToString();
+                    players[currentPlayersTurn].GetComponent<ShowCards>().RpcChangeText(2, "Called " + callValue.ToString());
                     PlaceBet(callValue, player);
                     player.currentPlayerState = Player.playerState.Called;
                 }
                 else
                 {
                     //Show Checked Text
-                    players[currentPlayersTurn].GetComponent<ShowCards>().statusText.GetComponent<TextMesh>().text = "Checked";
+                    players[currentPlayersTurn].GetComponent<ShowCards>().RpcChangeText(2, "Checked");
                     player.currentPlayerState = Player.playerState.Called;
                 }
                     break;
             case "Bet Min":
                 //Show Raise X Text
-                players[currentPlayersTurn].GetComponent<ShowCards>().statusText.GetComponent<TextMesh>().text = "Raised" + minBet.ToString();
+                players[currentPlayersTurn].GetComponent<ShowCards>().RpcChangeText(2, "Raised " + minBet.ToString());
                 PlaceBet(callValue + minBet, player);
                 currentBet += minBet;
                 MakeAllCalledPlayersUncalled();
@@ -501,7 +507,7 @@ public class PokerGameManager : MonoBehaviour {
             case "Fold":
                 player.currentPlayerState = Player.playerState.Folded;
                 //Show Folded Text
-                players[currentPlayersTurn].GetComponent<ShowCards>().statusText.GetComponent<TextMesh>().text = "Folded";
+                players[currentPlayersTurn].GetComponent<ShowCards>().RpcChangeText(2, "Folded");
                 //Hide Their Cards
                 players[currentPlayersTurn].GetComponent<Hand>().ResetHand();
                 break;
@@ -544,7 +550,8 @@ public class PokerGameManager : MonoBehaviour {
             player.SetRaisedValue(raisedValue + pocketValue);
             potValue += pocketValue;
         }
-        potValueText.text = "Pot: " + potValue.ToString();
+        communityCards.RpcChangePotValueText("Pot: " + potValue.ToString());
+        player.GetComponent<ShowCards>().RpcChangeText(1, "Pocket: " + player.GetPocketValue());
         //Update Pot Value Text
     }
 
@@ -562,6 +569,16 @@ public class PokerGameManager : MonoBehaviour {
             {
                 currentPlayersTurn = 0;
             }
+        }
+        //Update Current Player Turn Text
+    }
+
+    private void NextDealer()
+    {
+        currentDealerPlayer++;
+        if (currentDealerPlayer > numberOfPlayers - 1)
+        {
+            currentDealerPlayer = 0;
         }
         //Update Current Player Turn Text
     }

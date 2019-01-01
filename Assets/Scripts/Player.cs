@@ -66,7 +66,7 @@ public class Player : NetworkBehaviour {
         {
             CheckCallButton.SetActive(true);
             BetMinButton.SetActive(true);
-            BetOtherButton.SetActive(true);
+            //BetOtherButton.SetActive(true);
         }
     }
 
@@ -170,15 +170,14 @@ public class Player : NetworkBehaviour {
         else
         {
             CmdBetOtherButtonClick();
-            DeactivateGUIButtons();
+            //DeactivateGUIButtons();
         }
     }
 
     [Command]
     void CmdBetOtherButtonClick()
     {
-        BetOtherButtonClick();
-
+        //BetOtherButtonClick();
     }
 
     public void FoldButtonClick()

@@ -815,7 +815,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94ca0dadf105c664a99389896256fca1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  communityHand: {fileID: 0}
+  communityHand: {fileID: 114556258306658162, guid: c670257f3644df44ea8cf5f812d60b48,
+    type: 2}
   handType: 0
   highestRanks: 0000000000000000000000000000000000000000
 --- !u!114 &114297186554825556
@@ -969,12 +970,14 @@ MonoBehaviour:
   - {fileID: 4354209885663652}
   cardPositions: []
   textPositions: []
-  playerNameText: {fileID: 1900324709365704}
-  pocketValueText: {fileID: 1707661277317922}
-  statusText: {fileID: 1818341360502364}
-  winnerText: {fileID: 1079323259450060}
-  handTypeText: {fileID: 1788062700196826}
-  findLocalPlayer: {fileID: 0}
+  potValueText: {fileID: 0}
+  playerNameText: {fileID: 102956921384541534}
+  pocketValueText: {fileID: 102078164485804988}
+  statusText: {fileID: 102145877626655444}
+  winnerText: {fileID: 102938339158451046}
+  handTypeText: {fileID: 102989349325665270}
+  findLocalPlayer: {fileID: 114637860582829816, guid: 806a331f2db1d434f86fa2f124accb06,
+    type: 2}
   playerNum: 0
 --- !u!114 &114500931111269828
 MonoBehaviour:

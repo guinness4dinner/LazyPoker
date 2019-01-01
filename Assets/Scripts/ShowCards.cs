@@ -12,28 +12,32 @@ public class ShowCards : NetworkBehaviour {
     [SerializeField] Transform[] cardPositions;
     [SerializeField] Transform[] textPositions;
 
-    [SerializeField] public GameObject potValueText;
+    [SerializeField] public TextMesh potValueText;
 
-    [SerializeField] public GameObject playerNameText;
-    [SerializeField] public GameObject pocketValueText;
-    [SerializeField] public GameObject statusText;
-    [SerializeField] public GameObject winnerText;
-    [SerializeField] public GameObject handTypeText;
+    [SerializeField] public TextMesh playerNameText;
+    [SerializeField] public TextMesh pocketValueText;
+    [SerializeField] public TextMesh statusText;
+    [SerializeField] public TextMesh winnerText;
+    [SerializeField] public TextMesh handTypeText;
 
     [SerializeField] FindLocalPlayer findLocalPlayer;
+
+    TextMesh[] infoTexts = new TextMesh[] { null, null, null, null, null };
 
     [SyncVar]
     public int playerNum = -1;
 
-    private void Start()
+    public void Start()
     {
         cardPrefabs = FindObjectOfType<CardPrefabs>();
-        findLocalPlayer = FindObjectOfType<FindLocalPlayer>();
+        infoTexts = new TextMesh[] { playerNameText, pocketValueText, statusText, winnerText, handTypeText };
     }
 
     [ClientRpc]
     public void RpcSetLocalPlayer(int i)
     {
+        findLocalPlayer = FindObjectOfType<FindLocalPlayer>();
+
         playerNum = i;
 
         if (isLocalPlayer)
@@ -50,10 +54,8 @@ public class ShowCards : NetworkBehaviour {
             cardPositions = localCardPositions;
 
             playerNameText.GetComponent<TextMesh>().text = "You";
-            playerNameText.SetActive(true);
-
-            pocketValueText.GetComponent<TextMesh>().text = "Pocket: " + GetComponent<Player>().GetPocketValue().ToString();
-            pocketValueText.SetActive(true);
+            playerNameText.gameObject.SetActive(true);
+            pocketValueText.gameObject.SetActive(true);
         }
         else
         {
@@ -77,20 +79,55 @@ public class ShowCards : NetworkBehaviour {
             winnerText.transform.position = textPositions[3].position;
             handTypeText.transform.position = textPositions[4].position;
 
-            playerNameText.GetComponent<TextMesh>().text = "Player " + playerNum.ToString();
-            playerNameText.SetActive(true);
-
-            pocketValueText.GetComponent<TextMesh>().text = "Pocket: " + GetComponent<Player>().GetPocketValue().ToString();
-            pocketValueText.SetActive(true);
+            var playerNumText = playerNum + 1;
+            playerNameText.text = "Player " + playerNumText.ToString();
+            playerNameText.gameObject.SetActive(true);
+            pocketValueText.gameObject.SetActive(true);
         }
 
 	}
 
     [ClientRpc]
+    public void RpcChangeText(int infoTextNum, string text)
+    {
+        infoTexts[infoTextNum].text = text;
+    }
+
+    [ClientRpc]
+    public void RpcMakeTextActive(int infoTextNum)
+    {
+        infoTexts[infoTextNum].gameObject.SetActive(true);
+    }
+
+    [ClientRpc]
+    public void RpcMakeTextInactive(int infoTextNum)
+    {
+        infoTexts[infoTextNum].gameObject.SetActive(false);
+    }
+
+    [ClientRpc]
     public void RpcCommunitySetup()
     {
         cardPositions = localCardPositions;
-        potValueText.SetActive(true);
+        potValueText.gameObject.SetActive(true);
+    }
+
+    [ClientRpc]
+    public void RpcChangePotValueText(string text)
+    {
+        potValueText.text = text;
+    }
+
+    [ClientRpc]
+    public void RpcMakePotValueTextActive()
+    {
+        potValueText.gameObject.SetActive(true);
+    }
+
+    [ClientRpc]
+    public void RpcMakePotValueTextInactive()
+    {
+        potValueText.gameObject.SetActive(false);
     }
 
     [ClientRpc]
@@ -137,9 +174,12 @@ public class ShowCards : NetworkBehaviour {
     [ClientRpc]
     public void RpcRevealHand()
     {
-        foreach (Card el in GetComponentsInChildren<Card>())
+        if(!isLocalPlayer)
         {
-            el.GetComponent<Transform>().Rotate(0, 0, 0);
+            foreach (Card el in GetComponentsInChildren<Card>())
+            {
+                el.GetComponent<Transform>().Rotate(-180, 0, 0);
+            }
         }
     }
 }

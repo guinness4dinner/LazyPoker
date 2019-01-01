@@ -260,7 +260,7 @@ TextMesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1733297331454352}
-  m_Text: 'Pot Value: 0'
+  m_Text: 'Pot: 0'
   m_OffsetZ: 0
   m_CharacterSize: 0.005
   m_LineSpacing: 1
@@ -295,7 +295,7 @@ MonoBehaviour:
   - {fileID: 4797275375478254}
   cardPositions: []
   textPositions: []
-  potValueText: {fileID: 1733297331454352}
+  potValueText: {fileID: 102180447053512366}
   playerNameText: {fileID: 0}
   pocketValueText: {fileID: 0}
   statusText: {fileID: 0}

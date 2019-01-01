@@ -25,7 +25,7 @@ public class PokerHandChecker : MonoBehaviour {
     public Card.Rank[] highestRanks = new Card.Rank[] { Card.Rank.none, Card.Rank.none, Card.Rank.none, Card.Rank.none, Card.Rank.none };
     List<Card> playerHand;
 
-    private void Start()
+    public void RpcSetup()
     {
         var communityHandObject = GameObject.FindGameObjectWithTag("Community");
         communityHand = communityHandObject.GetComponent<Hand>();
