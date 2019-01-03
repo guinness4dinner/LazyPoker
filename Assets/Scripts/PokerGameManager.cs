@@ -28,7 +28,7 @@ public class PokerGameManager : MonoBehaviour {
     [SerializeField] FindLocalPlayer findLocalPlayer;
     [SerializeField] ShowCards communityCards;
 
-    public Player[] players;
+    [SerializeField] public Player[] players;
 
     int numberOfPlayers;
     [SerializeField] int currentPlayersTurn;
@@ -39,6 +39,7 @@ public class PokerGameManager : MonoBehaviour {
     [SerializeField] bool bettingRoundActive = false;
 
     [SerializeField] int potValue = 0;
+    [SerializeField] int sidepotValue = 0;
     [SerializeField] GameObject NewRoundButton;
 
     Player loneCaller = null;
@@ -64,6 +65,7 @@ public class PokerGameManager : MonoBehaviour {
             players[i].GetComponent<PokerHandChecker>().RpcSetup();
             players[i].SetPocketValue(startingPocket);
             players[i].GetComponent<ShowCards>().playerNum = i;
+            //players[i].name = "Player " + (i+1).ToString();
         }
         for (int i = 0; i < numberOfPlayers; i++)
         {
@@ -434,6 +436,7 @@ public class PokerGameManager : MonoBehaviour {
         int raisedValue = player.GetRaisedValue();
         int callValue = curBet - raisedValue;
 
+        int[] betOtherTable = GenerateBetOtherTable(callValue, minBet, player);
         //Setup Raise or Bet Other table.
 
         if (callValue > 0 )
@@ -441,14 +444,40 @@ public class PokerGameManager : MonoBehaviour {
 
             player.RpcSetButtonText(0, "Call " + callValue.ToString());
             player.RpcSetButtonText(1, "Raise " + minBet.ToString());
-            //player.BetOtherButton.GetComponent<Text>().text = "Raise Other";
+            player.BetOtherButton.GetComponent<Text>().text = "Raise Other";
+            for (int i = 0; i < betOtherTable.Length-1; i++)
+            {
+                if (betOtherTable[i] > 0)
+                {
+                    player.RpcSetBetOtherButtonText(i, "Raise " + betOtherTable[i].ToString());
+                }
+                else
+                {
+                    player.RpcSetBetOtherButtonText(i, "");
+                }
+                
+            }
+            player.RpcSetBetOtherButtonText(betOtherTable.Length-1, "All-in");
             player.RpcActivateFoldButton();
         }
         else
         {
             player.RpcSetButtonText(0, "Check");
             player.RpcSetButtonText(1, "Bet " + minBet.ToString());
-            //player.BetOtherButton.GetComponent<Text>().text = "Bet Other";
+            player.BetOtherButton.GetComponent<Text>().text = "Bet Other";
+            for (int i = 0; i < betOtherTable.Length - 1; i++)
+            {
+                if (betOtherTable[i] > 0)
+                {
+                    player.RpcSetBetOtherButtonText(i, "Bet " + betOtherTable[i].ToString());
+                }
+                else
+                {
+                    player.RpcSetBetOtherButtonText(i, "");
+                }
+
+            }
+            player.RpcSetBetOtherButtonText(betOtherTable.Length-1, "All-in");
         }
 
         Debug.Log("Waiting for Action from :" + player.netId.ToString());
@@ -481,6 +510,22 @@ public class PokerGameManager : MonoBehaviour {
                 player.currentPlayerState = Player.playerState.Called;
                 lastBetPlayer = player;
                 break;
+            case "Bet Other":
+                int betOtherAction = player.betOtherAction;
+                if (betOtherAction > -1 && betOtherAction < 7)
+                {
+                    players[currentPlayersTurn].GetComponent<ShowCards>().RpcChangeText(2, "Raised " + betOtherTable[betOtherAction].ToString());
+                }
+                else if (betOtherAction == 7)
+                {
+                    players[currentPlayersTurn].GetComponent<ShowCards>().RpcChangeText(2, "All-in");
+                }
+                PlaceBet(callValue + betOtherTable[betOtherAction], player);
+                currentBet += betOtherTable[betOtherAction];
+                MakeAllCalledPlayersUncalled();
+                player.currentPlayerState = Player.playerState.Called;
+                lastBetPlayer = player;
+                break;
             case "Fold":
                 player.currentPlayerState = Player.playerState.Folded;
                 //Show Folded Text
@@ -489,6 +534,40 @@ public class PokerGameManager : MonoBehaviour {
                 players[currentPlayersTurn].GetComponent<Hand>().ResetHand();
                 break;
         }
+    }
+
+    private int[] GenerateBetOtherTable(int callValue, int minBet, Player player)
+    {
+        int[] betOtherTable = new int[7];
+        int pocketValue = player.GetPocketValue();
+
+        for (int i = 2; i < 6; i++)
+        {
+            if (pocketValue > i*minBet + callValue)
+            {
+                betOtherTable[i - 2] = i * minBet;
+            }
+            else
+            {
+                betOtherTable[i - 2] = 0;
+            }
+        }
+
+        for (int i = 1; i < 3; i++)
+        {
+            if (pocketValue > i * 10 * minBet + callValue)
+            {
+                betOtherTable[i + 3] = i * 10 * minBet;
+            }
+            else
+            {
+                betOtherTable[i + 3] = 0;
+            }
+        }
+
+        betOtherTable[6] = pocketValue;
+
+        return betOtherTable;
     }
 
     public IEnumerator WaitForAction(Player player)
