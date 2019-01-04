@@ -104,7 +104,27 @@ public class PokerGameManager : MonoBehaviour {
             yield return StartCoroutine(BettingRound());
         }
         ChooseWinner();
+        CheckForElimination();
         AskForNewRound();
+    }
+
+    private void CheckForElimination()
+    {
+        //Check if any players have pocketvalue = 0.  If so set them to eliminated.
+        //Also turn off AllInFlags to false, set sidepotValue = 0, and sidepot text off.
+        //Set Status Text to Eliminated.
+
+        foreach (Player el in players)
+        {
+            if (el.GetPocketValue() == 0)
+            {
+                el.currentPlayerState = Player.playerState.Eliminated;
+                el.allInFlag = false;
+                el.GetComponent<ShowCards>().RpcChangeText(2, "Eliminated");
+                el.GetComponent<ShowCards>().RpcMakeTextInactive(3);
+                el.GetComponent<ShowCards>().RpcMakeTextInactive(4);
+            }
+        }
     }
 
     private void AskForNewRound()
@@ -127,7 +147,22 @@ public class PokerGameManager : MonoBehaviour {
         else
         {
             winners = CompareRemainingPlayers(lastBetPlayer);
-            //Update Text to show Hand Type and winner text.
+            //Are any winners all-in? If so, they take only the sidepot amount. Then compare remaining winners for remaing potvalue.
+            foreach (Player el in winners)
+            {
+                if (el.allInFlag == true)
+                {
+                    el.GetComponent<ShowCards>().RpcChangeText(2, "Sidepot");
+                    el.GetComponent<ShowCards>().RpcMakeTextActive(3);
+                    el.GetComponent<ShowCards>().RpcChangeText(4, "with " + el.GetComponent<PokerHandChecker>().handType.ToString());
+                    el.GetComponent<ShowCards>().RpcMakeTextActive(4);
+                    GiveSidePotToPlayer(el);
+                    el.allInFlag = false;
+                    el.currentPlayerState = Player.playerState.Folded;
+                    winners = CompareRemainingPlayers(lastBetPlayer);                    
+                }
+            }
+                //Update Text to show Hand Type and winner text.
             foreach (Player el in winners)
             {
                 el.GetComponent<ShowCards>().RpcMakeTextActive(3);
@@ -143,6 +178,17 @@ public class PokerGameManager : MonoBehaviour {
                 GivePotToPlayer(winners[0]);
             }
         }  
+    }
+
+    private void GiveSidePotToPlayer(Player winner)
+    {
+        var playerPocket = winner.GetPocketValue();
+        winner.SetPocketValue(playerPocket + sidepotValue);
+        potValue = potValue - sidepotValue;
+        //Update Pot Value text.
+        communityCards.RpcChangePotValueText("Pot: " + potValue.ToString());
+        //Turn off Sidepot Value
+        winner.GetComponent<ShowCards>().RpcChangeText(1, "Pocket: " + winner.GetPocketValue());
     }
 
     private void SplitPot(List<Player> winners)
@@ -292,7 +338,7 @@ public class PokerGameManager : MonoBehaviour {
     {
         for (int i = 0; i < numberOfPlayers; i++)
         {
-            if (players[i].currentPlayerState != Player.playerState.Folded)
+            if (players[i].currentPlayerState != Player.playerState.Folded && players[i].currentPlayerState != Player.playerState.Eliminated)
             {
                 players[i].currentPlayerState = Player.playerState.Uncalled;
                 players[i].GetComponent<ShowCards>().RpcChangeText(2, "");
@@ -305,14 +351,26 @@ public class PokerGameManager : MonoBehaviour {
     {
         NewRoundButton.SetActive(false);
         currentGameState = gameStates.Start;
+        sidepotValue = 0;
+        //Turn off Sidepot text
         //Reset text about Hand Types or Winner.
         foreach (Player el in players)
         {
+<<<<<<< HEAD
             el.currentPlayerState = Player.playerState.Uncalled;
             el.GetComponent<ShowCards>().RpcMakeTextInactive(3);
             el.GetComponent<ShowCards>().RpcMakeTextInactive(4);
             el.GetComponent<ShowCards>().RpcChangeText(2, "");
             el.GetComponent<ShowCards>().RpcDeactivateTurnButton();
+=======
+            if (el.currentPlayerState != Player.playerState.Eliminated)
+            {
+                el.currentPlayerState = Player.playerState.Uncalled;
+                el.GetComponent<ShowCards>().RpcMakeTextInactive(3);
+                el.GetComponent<ShowCards>().RpcMakeTextInactive(4);
+                el.GetComponent<ShowCards>().RpcChangeText(2, "");
+            }
+>>>>>>> e6a96fef38d4bfbf03ffdccd757edff16320aad7
         }
         loneCaller = null;
         lastBetPlayer = null;
@@ -605,7 +663,10 @@ public class PokerGameManager : MonoBehaviour {
         {
             player.SetPocketValue(0);
             player.SetRaisedValue(raisedValue + pocketValue);
+            player.allInFlag = true;
             potValue += pocketValue;
+            sidepotValue = potValue;
+            //Update Sidepot Value Text.
         }
         communityCards.RpcChangePotValueText("Pot: " + potValue.ToString());
         player.GetComponent<ShowCards>().RpcChangeText(1, "Pocket: " + player.GetPocketValue());
@@ -620,7 +681,8 @@ public class PokerGameManager : MonoBehaviour {
         {
             currentPlayersTurn = 0;
         }
-        while (players[currentPlayersTurn].currentPlayerState == Player.playerState.Folded)
+        while (players[currentPlayersTurn].currentPlayerState == Player.playerState.Folded 
+            | players[currentPlayersTurn].currentPlayerState == Player.playerState.Eliminated)
         {
             currentPlayersTurn++;
             if (currentPlayersTurn > numberOfPlayers - 1)
@@ -646,6 +708,14 @@ public class PokerGameManager : MonoBehaviour {
         if (currentDealerPlayer > numberOfPlayers - 1)
         {
             currentDealerPlayer = 0;
+        }
+        while (players[currentDealerPlayer].currentPlayerState == Player.playerState.Eliminated)
+        {
+            currentDealerPlayer++;
+            if (currentDealerPlayer > numberOfPlayers - 1)
+            {
+                currentDealerPlayer = 0;
+            }
         }
         players[currentDealerPlayer].GetComponent<ShowCards>().RpcActivateDealerButton();
         //Update Current Player Turn Text

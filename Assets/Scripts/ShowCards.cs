@@ -61,6 +61,10 @@ public class ShowCards : NetworkBehaviour {
             playerNameText.GetComponent<TextMesh>().text = "You";
             playerNameText.gameObject.SetActive(true);
             pocketValueText.gameObject.SetActive(true);
+
+            var playerNumText = playerNum + 1;
+            gameObject.name = "Player " + playerNumText.ToString();
+
         }
         else
         {

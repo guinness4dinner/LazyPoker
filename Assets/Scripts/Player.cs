@@ -11,6 +11,7 @@ public class Player : NetworkBehaviour {
         Uncalled,
         Called,
         Folded,
+        Eliminated
     };
 
     public playerState currentPlayerState = playerState.Uncalled;
@@ -35,6 +36,7 @@ public class Player : NetworkBehaviour {
 
     [SerializeField] int pocketValue = 0;
     [SerializeField] int raisedValue = 0;
+    [SerializeField] public bool allInFlag = false;
     [SerializeField] GameObject buttonCanvas;
 
     GameObject[] buttons;
