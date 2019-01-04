@@ -79,7 +79,7 @@ public class PokerGameManager : MonoBehaviour {
 
         //Place Dealer, and Turn buttons
         players[currentDealerPlayer].GetComponent<ShowCards>().RpcActivateDealerButton();
-        currentPlayersTurn = currentDealerPlayer;
+        SetPlayersTurn(currentDealerPlayer);
         NextPlayersTurn();
         
         currentGameState = gameStates.Start;
@@ -310,12 +310,13 @@ public class PokerGameManager : MonoBehaviour {
             el.GetComponent<ShowCards>().RpcMakeTextInactive(3);
             el.GetComponent<ShowCards>().RpcMakeTextInactive(4);
             el.GetComponent<ShowCards>().RpcChangeText(2, "");
+            el.GetComponent<ShowCards>().RpcDeactivateTurnButton();
         }
         loneCaller = null;
         lastBetPlayer = null;
         //Set Next Dealer & Current Player
         NextDealer();
-        currentPlayersTurn = currentDealerPlayer;
+        SetPlayersTurn(currentDealerPlayer);
         NextPlayersTurn();
         currentBet = 0;
         curMinBet = minBet;
@@ -367,14 +368,14 @@ public class PokerGameManager : MonoBehaviour {
                 currentBet = bigBlindValue;
                 break;
             case gameStates.Flop:
-                currentPlayersTurn = currentDealerPlayer;
+                SetPlayersTurn(currentDealerPlayer);
                 break;
             case gameStates.Turn:
-                currentPlayersTurn = currentDealerPlayer;
+                SetPlayersTurn(currentDealerPlayer);
                 curMinBet *= 2;
                 break;
             case gameStates.River:
-                currentPlayersTurn = currentDealerPlayer;
+                SetPlayersTurn(currentDealerPlayer);
                 break;
             default:
                 break;
@@ -552,7 +553,14 @@ public class PokerGameManager : MonoBehaviour {
         //Update Current Player Turn Text
     }
 
-    private void NextDealer()
+    private void SetPlayersTurn(int turn)
+    {
+        players[currentPlayersTurn].GetComponent<ShowCards>().RpcDeactivateTurnButton();
+        currentPlayersTurn = turn;
+        players[currentPlayersTurn].GetComponent<ShowCards>().RpcActivateTurnButton();
+    }
+
+        private void NextDealer()
     {
         players[currentDealerPlayer].GetComponent<ShowCards>().RpcDeactivateDealerButton();
         currentDealerPlayer++;
