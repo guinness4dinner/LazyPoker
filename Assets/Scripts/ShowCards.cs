@@ -94,6 +94,7 @@ public class ShowCards : NetworkBehaviour {
 
             var playerNumText = playerNum + 1;
             playerNameText.text = "Player " + playerNumText.ToString();
+            gameObject.name = "Player " + playerNumText.ToString();
             playerNameText.gameObject.SetActive(true);
             pocketValueText.gameObject.SetActive(true);
         }
@@ -104,6 +105,11 @@ public class ShowCards : NetworkBehaviour {
     public void RpcChangeText(int infoTextNum, string text)
     {
         infoTexts[infoTextNum].text = text;
+
+        if (infoTextNum == 0) //playerNameText
+        {
+            gameObject.name = "Player " + (playerNum + 1).ToString() + " - " + text;  //Rename Gameobject for debug purposes.
+        }
     }
 
     [ClientRpc]
