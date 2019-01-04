@@ -104,11 +104,11 @@ public class PokerGameManager : MonoBehaviour {
             yield return StartCoroutine(BettingRound());
         }
         ChooseWinner();
-        CheckForElimination();
+        CheckForEliminationOrBuyIn();
         AskForNewRound();
     }
 
-    private void CheckForElimination()
+    private void CheckForEliminationOrBuyIn()
     {
         //Check if any players have pocketvalue = 0.  If so set them to eliminated.
         //Also turn off AllInFlags to false, set sidepotValue = 0, and sidepot text off.
@@ -123,6 +123,12 @@ public class PokerGameManager : MonoBehaviour {
                 el.GetComponent<ShowCards>().RpcChangeText(2, "Eliminated");
                 el.GetComponent<ShowCards>().RpcMakeTextInactive(3);
                 el.GetComponent<ShowCards>().RpcMakeTextInactive(4);
+                el.GetComponent<ShowCards>().RpcDeactivateTurnButton();
+            }
+            if (el.GetPocketValue() > 0 && el.currentPlayerState == Player.playerState.Eliminated)
+            {
+                el.currentPlayerState = Player.playerState.Uncalled;
+                el.GetComponent<ShowCards>().RpcChangeText(2, "");
             }
         }
     }
@@ -356,21 +362,14 @@ public class PokerGameManager : MonoBehaviour {
         //Reset text about Hand Types or Winner.
         foreach (Player el in players)
         {
-<<<<<<< HEAD
-            el.currentPlayerState = Player.playerState.Uncalled;
-            el.GetComponent<ShowCards>().RpcMakeTextInactive(3);
-            el.GetComponent<ShowCards>().RpcMakeTextInactive(4);
-            el.GetComponent<ShowCards>().RpcChangeText(2, "");
-            el.GetComponent<ShowCards>().RpcDeactivateTurnButton();
-=======
             if (el.currentPlayerState != Player.playerState.Eliminated)
             {
                 el.currentPlayerState = Player.playerState.Uncalled;
                 el.GetComponent<ShowCards>().RpcMakeTextInactive(3);
                 el.GetComponent<ShowCards>().RpcMakeTextInactive(4);
                 el.GetComponent<ShowCards>().RpcChangeText(2, "");
+                el.GetComponent<ShowCards>().RpcDeactivateTurnButton();
             }
->>>>>>> e6a96fef38d4bfbf03ffdccd757edff16320aad7
         }
         loneCaller = null;
         lastBetPlayer = null;

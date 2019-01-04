@@ -1,19 +1,18 @@
 
--Side Pot logic
+-Multiple Sidepot Logic... (check that the single side pot works first)
+Test:
+-Player Elimination
+-Sidepots
 
 Then:
--Player Elimination, Disconnection
-	Elimination
-	-Set them as always folded.
-	-Make sure dealer button skips them.
-	-The rest of the logic should be fine.
-	Disconnection
+-Player naming
+-Player Disconnection
 	-Set them as eliminated instead of deleting the player object.
 	-If they reconnect, can they take thier seat back?
--Server-side Game Setup Options: starting pocket, blinds, min bet.
--Player naming
--Server-side in-game options:
+-Server-side Game Setup Options: 
+	-Starting pocket, 
+	-Set Blinds, and min bet.
+-Server-side in-game options:	
 	-Set Pocket value of any player.
-	-Set elimination status on or off.
 	-Set Blinds, and Min Bet
-	-Force New Round.
+	-Force New Round. (What happens to pot? Just throw it away.)
