@@ -17,17 +17,28 @@ public class Player : NetworkBehaviour {
 
 
     [SyncVar] [SerializeField] public string action; //{ get; private set; }
+    [SyncVar] [SerializeField] public int betOtherAction = -1;
 
     public GameObject CheckCallButton;
     public GameObject BetMinButton;
     public GameObject BetOtherButton;
     public GameObject FoldButton;
 
+    public GameObject BetOtherMenu;
+    public GameObject Bet2xButton;
+    public GameObject Bet3xButton;
+    public GameObject Bet4xButton;
+    public GameObject Bet5xButton;
+    public GameObject Bet10xButton;
+    public GameObject Bet20xButton;
+    public GameObject AllInButton;
+
     [SerializeField] int pocketValue = 0;
     [SerializeField] int raisedValue = 0;
     [SerializeField] GameObject buttonCanvas;
 
     GameObject[] buttons;
+    GameObject[] betOtherButtons;
 
     private void Start()
     {
@@ -36,6 +47,7 @@ public class Player : NetworkBehaviour {
             buttonCanvas.SetActive(true);
         }
         buttons = new GameObject[4] { CheckCallButton, BetMinButton, BetOtherButton, FoldButton };
+        betOtherButtons = new GameObject[7] { Bet2xButton, Bet3xButton, Bet4xButton, Bet5xButton, Bet10xButton, Bet20xButton, AllInButton };
     }
 
     public int GetPocketValue()
@@ -66,7 +78,7 @@ public class Player : NetworkBehaviour {
         {
             CheckCallButton.SetActive(true);
             BetMinButton.SetActive(true);
-            //BetOtherButton.SetActive(true);
+            BetOtherButton.SetActive(true);
         }
     }
 
@@ -85,6 +97,15 @@ public class Player : NetworkBehaviour {
         if (isLocalPlayer)
         {
             buttons[buttonNum].GetComponent<Text>().text = text;
+        }
+    }
+
+    [ClientRpc]
+    public void RpcSetBetOtherButtonText(int buttonNum, string text)
+    {
+        if (isLocalPlayer)
+        {
+            betOtherButtons[buttonNum].GetComponent<Text>().text = text;
         }
     }
 
@@ -110,6 +131,10 @@ public class Player : NetworkBehaviour {
         if (BetOtherButton.activeSelf)
         {
             BetOtherButton.SetActive(false);
+        }
+        if (BetOtherMenu.activeSelf)
+        {
+            BetOtherMenu.SetActive(false);
         }
         if (FoldButton.activeSelf)
         {
@@ -163,21 +188,35 @@ public class Player : NetworkBehaviour {
 
     public void BetOtherButtonClick()
     {
-        if (isServer)
+        if (BetOtherMenu.activeSelf)
         {
-            //action = "Bet Other";
+            BetOtherMenu.SetActive(false);
         }
         else
         {
-            CmdBetOtherButtonClick();
-            //DeactivateGUIButtons();
+            BetOtherMenu.SetActive(true);
+        }
+        
+    }
+
+    public void BetOtherMenuButtonClick(int betOtherButNum)
+    {
+        if (isServer)
+        {
+            action = "Bet Other";
+            betOtherAction = betOtherButNum;
+        }
+        else
+        {
+            CmdBetOtherMenuButtonClick(betOtherButNum);
+            DeactivateGUIButtons();
         }
     }
 
     [Command]
-    void CmdBetOtherButtonClick()
+    void CmdBetOtherMenuButtonClick(int betOtherButNum)
     {
-        //BetOtherButtonClick();
+        BetOtherMenuButtonClick(betOtherButNum);
     }
 
     public void FoldButtonClick()
