@@ -144,8 +144,7 @@ public class Player : NetworkBehaviour {
         }
     }
 
-    [ClientRpc]
-    public void RpcSetActionNull()
+    public void SetActionNull()
     {
         action = null;
     }

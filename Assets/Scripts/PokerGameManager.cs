@@ -194,7 +194,7 @@ public class PokerGameManager : MonoBehaviour {
         potValue = potValue - sidepotValue;
         //Update Pot Value text.
         communityCards.RpcChangePotValueText("Pot: " + potValue.ToString());
-        //Turn off Sidepot Value
+        communityCards.RpcMakeSidepotValueTextInactive();
         winner.GetComponent<ShowCards>().RpcChangeText(1, "Pocket: " + winner.GetPocketValue());
     }
 
@@ -253,9 +253,11 @@ public class PokerGameManager : MonoBehaviour {
             var removeIdx0 = CompareHighestRanks(highesHandtypePlayers, highestRanks, 0);
             foreach (int el in removeIdx0)
             {
-                highesHandtypePlayers.RemoveAt(el);
-                highestRanks.RemoveAt(el);
+                highesHandtypePlayers[el] = null;
+                highestRanks[el] = null;
             }
+            highesHandtypePlayers.RemoveAll(player => player == null);
+            highestRanks.RemoveAll(hands => hands == null);
 
             if (highesHandtypePlayers.Count > 1)
             {
@@ -263,47 +265,59 @@ public class PokerGameManager : MonoBehaviour {
                 var removeIdx1 = CompareHighestRanks(highesHandtypePlayers, highestRanks, 1);
                 foreach (int el in removeIdx1)
                 {
-                    highesHandtypePlayers.RemoveAt(el);
-                    highestRanks.RemoveAt(el);
+                    highesHandtypePlayers[el] = null;
+                    highestRanks[el] = null;
                 }
+                highesHandtypePlayers.RemoveAll(player => player == null);
+                highestRanks.RemoveAll(hands => hands == null);
+
                 if (highesHandtypePlayers.Count > 1)
                 {
                     var removeIdx2 = CompareHighestRanks(highesHandtypePlayers, highestRanks, 2);
                     foreach (int el in removeIdx2)
                     {
-                        highesHandtypePlayers.RemoveAt(el);
-                        highestRanks.RemoveAt(el);
+                        highesHandtypePlayers[el] = null;
+                        highestRanks[el] = null;
                     }
+                    highesHandtypePlayers.RemoveAll(player => player == null);
+                    highestRanks.RemoveAll(hands => hands == null);
+
                     if (highesHandtypePlayers.Count > 1)
                     {
                         var removeIdx3 = CompareHighestRanks(highesHandtypePlayers, highestRanks, 3);
                         foreach (int el in removeIdx3)
                         {
-                            highesHandtypePlayers.RemoveAt(el);
-                            highestRanks.RemoveAt(el);
+                            highesHandtypePlayers[el] = null;
+                            highestRanks[el] = null;
                         }
+                        highesHandtypePlayers.RemoveAll(player => player == null);
+                        highestRanks.RemoveAll(hands => hands == null);
+
                         if (highesHandtypePlayers.Count > 1)
                         {
                             var removeIdx4 = CompareHighestRanks(highesHandtypePlayers, highestRanks, 4);
                             foreach (int el in removeIdx4)
                             {
-                                highesHandtypePlayers.RemoveAt(el);
-                                highestRanks.RemoveAt(el);
+                                highesHandtypePlayers[el] = null;
+                                highestRanks[el] = null;
                             }
+                            highesHandtypePlayers.RemoveAll(player => player == null);
+                            highestRanks.RemoveAll(hands => hands == null);
                         }
                     }
                 }
             }
         }
 
+
         //if (highesHandtypePlayers.Count == 1 && highesHandtypePlayers[0] == lastBetPlayer)
         //{
-            //highesHandtypePlayers[0].GetComponent<ShowCards>().RpcRevealHand();
-            //Ask each remainingPlayer if they would like to reveal
+        //highesHandtypePlayers[0].GetComponent<ShowCards>().RpcRevealHand();
+        //Ask each remainingPlayer if they would like to reveal
         //}
         //else
         //{
-            foreach (Player el in remainingPlayers)
+        foreach (Player el in remainingPlayers)
             {
                 el.GetComponent<ShowCards>().RpcRevealHand();
             }
@@ -359,7 +373,7 @@ public class PokerGameManager : MonoBehaviour {
         NewRoundButton.SetActive(false);
         currentGameState = gameStates.Start;
         sidepotValue = 0;
-        //Turn off Sidepot text
+        communityCards.RpcMakeSidepotValueTextInactive();
         //Reset text about Hand Types or Winner.
         foreach (Player el in players)
         {
@@ -441,7 +455,7 @@ public class PokerGameManager : MonoBehaviour {
                 break;
         }
 
-        while (areAnyPlayersNotCalledOrFolded())
+        while (areAnyPlayersUncalled())
         {
             NextPlayersTurn();
             yield return StartCoroutine(AskForCheckCallOrRaise(currentBet, curMinBet, players[currentPlayersTurn]));
@@ -477,7 +491,7 @@ public class PokerGameManager : MonoBehaviour {
         return true;
     }
 
-    private bool areAnyPlayersNotCalledOrFolded()
+    private bool areAnyPlayersUncalled()
     {
         for (int i = 0; i < numberOfPlayers; i++)
         {
@@ -539,7 +553,7 @@ public class PokerGameManager : MonoBehaviour {
             player.RpcSetBetOtherButtonText(betOtherTable.Length-1, "All-in");
         }
 
-        Debug.Log("Waiting for Action from :" + player.netId.ToString());
+        //Debug.Log("Waiting for Action from :" + player.name);
         yield return StartCoroutine(WaitForAction(player));
 
 
@@ -631,7 +645,7 @@ public class PokerGameManager : MonoBehaviour {
 
     public IEnumerator WaitForAction(Player player)
     {
-        player.RpcSetActionNull(); // clear last action, we want a new one
+        player.SetActionNull(); // clear last action, we want a new one
         player.RpcActivateGUIButtons();
         while (player.action == null)
         { yield return null; }
@@ -642,7 +656,7 @@ public class PokerGameManager : MonoBehaviour {
     {
         for (int i = 0; i < numberOfPlayers; i++)
         {
-            if (players[i].currentPlayerState == Player.playerState.Called)
+            if (players[i].currentPlayerState == Player.playerState.Called && players[i].allInFlag == false)
             {
                 players[i].currentPlayerState = Player.playerState.Uncalled;
             }
@@ -663,9 +677,12 @@ public class PokerGameManager : MonoBehaviour {
         {
             player.SetPocketValue(0);
             player.SetRaisedValue(raisedValue + pocketValue);
+            player.currentPlayerState = Player.playerState.Called;
             player.allInFlag = true;
             potValue += pocketValue;
             sidepotValue = potValue;
+            communityCards.RpcMakeSidepotValueTextActive();
+            communityCards.RpcChangeSidepotValueText("Sidepot: " + sidepotValue.ToString());
             //Update Sidepot Value Text.
         }
         communityCards.RpcChangePotValueText("Pot: " + potValue.ToString());
@@ -682,7 +699,7 @@ public class PokerGameManager : MonoBehaviour {
             currentPlayersTurn = 0;
         }
         while (players[currentPlayersTurn].currentPlayerState == Player.playerState.Folded 
-            | players[currentPlayersTurn].currentPlayerState == Player.playerState.Eliminated)
+            | players[currentPlayersTurn].currentPlayerState == Player.playerState.Eliminated | players[currentPlayersTurn].allInFlag == true)
         {
             currentPlayersTurn++;
             if (currentPlayersTurn > numberOfPlayers - 1)

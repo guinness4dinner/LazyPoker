@@ -15,6 +15,7 @@ public class ShowCards : NetworkBehaviour {
 
 
     [SerializeField] public TextMesh potValueText;
+    [SerializeField] public TextMesh sidepotValueText;
 
     [SerializeField] public TextMesh playerNameText;
     [SerializeField] public TextMesh pocketValueText;
@@ -175,6 +176,24 @@ public class ShowCards : NetworkBehaviour {
     public void RpcMakePotValueTextInactive()
     {
         potValueText.gameObject.SetActive(false);
+    }
+
+    [ClientRpc]
+    public void RpcChangeSidepotValueText(string text)
+    {
+        sidepotValueText.text = text;
+    }
+
+    [ClientRpc]
+    public void RpcMakeSidepotValueTextActive()
+    {
+        sidepotValueText.gameObject.SetActive(true);
+    }
+
+    [ClientRpc]
+    public void RpcMakeSidepotValueTextInactive()
+    {
+        sidepotValueText.gameObject.SetActive(false);
     }
 
     [ClientRpc]

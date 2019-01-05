@@ -1,7 +1,10 @@
+-Issues:
+	-No Sidepot text.
+	-Sidepot- round doesn't end cause sidepot player isn't called. 	Both fixed but not tested.
+
 
 -Multiple Sidepot Logic... (check that the single side pot works first)
 Test:
--Player Elimination
 -Sidepots
 
 Then:
@@ -10,4 +13,4 @@ Then:
 	-Set them as eliminated instead of deleting the player object.
 	-If they reconnect, can they take thier seat back?
 -Server-side in-game options:	
-	-Force New Round. (What happens to pot? Just throw it away.)
+	-Force New Round. (What happens to pot? Just throw it away).
