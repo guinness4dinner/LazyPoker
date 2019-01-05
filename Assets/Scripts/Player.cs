@@ -60,7 +60,7 @@ public class Player : NetworkBehaviour {
     public void SetPocketValue(int value)
     {
         pocketValue = value;
-        GetComponent<ShowCards>().pocketValueText.GetComponent<TextMesh>().text = "Pocket: " + pocketValue.ToString();
+        GetComponent<ShowCards>().RpcChangeText(1, "Pocket: " + pocketValue.ToString());
     }
 
     public void SetRaisedValue(int value)

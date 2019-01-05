@@ -41,6 +41,7 @@ public class PokerGameManager : MonoBehaviour {
     [SerializeField] int potValue = 0;
     [SerializeField] int sidepotValue = 0;
     [SerializeField] GameObject NewRoundButton;
+    [SerializeField] GameObject optionsMenu;
 
     Player loneCaller = null;
     Player lastBetPlayer = null;
@@ -74,7 +75,7 @@ public class PokerGameManager : MonoBehaviour {
             players[i].GetComponent<ShowCards>().RpcChangeText(1, "Pocket: " + players[i].GetPocketValue());
         }
         FindObjectOfType<FindLocalPlayer>().RpcSetNumberOfPlayers(numberOfPlayers);
-
+        optionsMenu.GetComponent<OptionsMenu>().SetPlayers(players);
         dealer.SetupGame();
         
         //Choose first dealer (Randomly?)
@@ -719,4 +720,70 @@ public class PokerGameManager : MonoBehaviour {
         players[currentDealerPlayer].GetComponent<ShowCards>().RpcActivateDealerButton();
         //Update Current Player Turn Text
     }
+
+
+    //Options Control
+
+    public void ToggleOptionsMenu()
+    {
+        if (optionsMenu.gameObject.activeSelf)
+        {
+            optionsMenu.gameObject.SetActive(false);
+        }
+        else
+        {
+            optionsMenu.gameObject.SetActive(true);
+            optionsMenu.GetComponent<OptionsMenu>().RefreshOptionsText();
+        }
+    }
+
+    public void SetSmallBlind(int valueToSet)
+    {
+        smallBlindValue = valueToSet;
+    }
+
+    public int GetSmallBlind()
+    {
+        return smallBlindValue;
+    }
+
+    public void SetBigBlind(int valueToSet)
+    {
+        bigBlindValue = valueToSet;
+    }
+
+    public int GetBigBlind()
+    {
+        return bigBlindValue;
+    }
+
+
+    public void SetMinimumBet(int valueToSet)
+    {
+        minBet = valueToSet;
+    }
+
+    public int GetMinimumBet()
+    {
+        return minBet;
+    }
+
+
+    public void SetStartingPocket(int valueToSet)
+    {
+        startingPocket = valueToSet;
+    }
+
+    public int GetStartingPocket()
+    {
+        return startingPocket;
+    }
+
+
+    public void ForceNewRound()
+    {
+        CheckForEliminationOrBuyIn();
+        NewRound();
+    }
+
 }
